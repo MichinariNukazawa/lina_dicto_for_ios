@@ -86,31 +86,24 @@ func convertAlfabetoFromCaretSistemo(str :String) -> String{
     return dst;
 }
 
-class ViewController: UIViewController,  UISearchBarDelegate{
+struct DictItem : Codable{
+    let key: String
+    let value: String
+}
+struct SearchResponseItem{
+    var matchedKey: String
+    var matchItem: DictItem?
+}
+class LDictionary{
+    private var dictItems = [DictItem]()
     
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var textView: UITextView!
-    
-    
-    struct DictItem : Codable{
-        let key: String
-        let value: String
-    }
-    
-    var dictItems = [DictItem]()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        searchBar.delegate = self
-
+    func initialize(){
         // ファイルまでのパスを取得（同時にnilチェック）
         if let path: String = Bundle.main.path(forResource: "dictionary00", ofType: "json") {
             do {
                 // ファイルの内容を取得する
                 let jsonData = try String(contentsOfFile: path)
-
+                
                 let decoder: JSONDecoder = JSONDecoder()
                 do {
                     let dictItems_: [DictItem] = try decoder.decode([DictItem].self, from: jsonData.data(using: .utf8)!)
@@ -129,16 +122,12 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         }else {
             print("指定されたファイルが見つかりません")
         }
+        
     }
     
-    //検索ボタン押下時の呼び出しメソッド
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
-        
-        let searchKey = searchBar.text!
-        let casedSearchKey = searchKey.lowercased()
-        //print("search:" + casedSearchKey);
+    func search(searchKey: String) -> [SearchResponseItem]{
         var match :DictItem? = nil
+        let casedSearchKey = searchKey.lowercased()
         var count :Int = 0
         for dictItem in dictItems{
             var itemKey : String = dictItem.key.lowercased()
@@ -149,6 +138,42 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 break
             }
             count += 1
+        }
+        
+        var result = [SearchResponseItem]()
+        let resultItem = SearchResponseItem(matchedKey: searchKey, matchItem: match)
+        result.append(resultItem)
+        return result
+    }
+}
+
+class ViewController: UIViewController,  UISearchBarDelegate{
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var textView: UITextView!
+    
+    var dict = LDictionary()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        searchBar.delegate = self
+
+        dict.initialize()
+    }
+    
+    //検索ボタン押下時の呼び出しメソッド
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        
+        let searchKey = searchBar.text!
+        
+        
+        let result = dict.search(searchKey: searchKey)
+        var match :DictItem? = nil
+        if(0 < result.count){
+            match = result[0].matchItem
         }
 
         if("(result area)" == textView.text){ // 最初の表示をクリア
