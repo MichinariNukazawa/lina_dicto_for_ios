@@ -1,0 +1,585 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */; };
+		A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DE22EB307800B4ED26 /* ViewController.swift */; };
+		A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E022EB307800B4ED26 /* Main.storyboard */; };
+		A7EA86E422EB307A00B4ED26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E322EB307A00B4ED26 /* Assets.xcassets */; };
+		A7EA86E722EB307A00B4ED26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E522EB307A00B4ED26 /* LaunchScreen.storyboard */; };
+		A7EA86F222EB307A00B4ED26 /* lina_dicto_for_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86F122EB307A00B4ED26 /* lina_dicto_for_iosTests.swift */; };
+		A7EA86FD22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86FC22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A7EA86EE22EB307A00B4ED26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EA86D122EB307800B4ED26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A7EA86D822EB307800B4ED26;
+			remoteInfo = lina_dicto_for_ios;
+		};
+		A7EA86F922EB307A00B4ED26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EA86D122EB307800B4ED26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A7EA86D822EB307800B4ED26;
+			remoteInfo = lina_dicto_for_ios;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A7EA86D922EB307800B4ED26 /* lina_dicto_for_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lina_dicto_for_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A7EA86DE22EB307800B4ED26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A7EA86E122EB307800B4ED26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A7EA86E322EB307A00B4ED26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A7EA86E622EB307A00B4ED26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A7EA86E822EB307A00B4ED26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7EA86ED22EB307A00B4ED26 /* lina_dicto_for_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lina_dicto_for_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7EA86F122EB307A00B4ED26 /* lina_dicto_for_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lina_dicto_for_iosTests.swift; sourceTree = "<group>"; };
+		A7EA86F322EB307A00B4ED26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7EA86F822EB307A00B4ED26 /* lina_dicto_for_iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lina_dicto_for_iosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7EA86FC22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lina_dicto_for_iosUITests.swift; sourceTree = "<group>"; };
+		A7EA86FE22EB307A00B4ED26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A7EA86D622EB307800B4ED26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7EA86EA22EB307A00B4ED26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7EA86F522EB307A00B4ED26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A7EA86D022EB307800B4ED26 = {
+			isa = PBXGroup;
+			children = (
+				A7EA86DB22EB307800B4ED26 /* lina_dicto_for_ios */,
+				A7EA86F022EB307A00B4ED26 /* lina_dicto_for_iosTests */,
+				A7EA86FB22EB307A00B4ED26 /* lina_dicto_for_iosUITests */,
+				A7EA86DA22EB307800B4ED26 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A7EA86DA22EB307800B4ED26 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A7EA86D922EB307800B4ED26 /* lina_dicto_for_ios.app */,
+				A7EA86ED22EB307A00B4ED26 /* lina_dicto_for_iosTests.xctest */,
+				A7EA86F822EB307A00B4ED26 /* lina_dicto_for_iosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A7EA86DB22EB307800B4ED26 /* lina_dicto_for_ios */ = {
+			isa = PBXGroup;
+			children = (
+				A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */,
+				A7EA86DE22EB307800B4ED26 /* ViewController.swift */,
+				A7EA86E022EB307800B4ED26 /* Main.storyboard */,
+				A7EA86E322EB307A00B4ED26 /* Assets.xcassets */,
+				A7EA86E522EB307A00B4ED26 /* LaunchScreen.storyboard */,
+				A7EA86E822EB307A00B4ED26 /* Info.plist */,
+			);
+			path = lina_dicto_for_ios;
+			sourceTree = "<group>";
+		};
+		A7EA86F022EB307A00B4ED26 /* lina_dicto_for_iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				A7EA86F122EB307A00B4ED26 /* lina_dicto_for_iosTests.swift */,
+				A7EA86F322EB307A00B4ED26 /* Info.plist */,
+			);
+			path = lina_dicto_for_iosTests;
+			sourceTree = "<group>";
+		};
+		A7EA86FB22EB307A00B4ED26 /* lina_dicto_for_iosUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A7EA86FC22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift */,
+				A7EA86FE22EB307A00B4ED26 /* Info.plist */,
+			);
+			path = lina_dicto_for_iosUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A7EA86D822EB307800B4ED26 /* lina_dicto_for_ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7EA870122EB307A00B4ED26 /* Build configuration list for PBXNativeTarget "lina_dicto_for_ios" */;
+			buildPhases = (
+				A7EA86D522EB307800B4ED26 /* Sources */,
+				A7EA86D622EB307800B4ED26 /* Frameworks */,
+				A7EA86D722EB307800B4ED26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = lina_dicto_for_ios;
+			productName = lina_dicto_for_ios;
+			productReference = A7EA86D922EB307800B4ED26 /* lina_dicto_for_ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A7EA86EC22EB307A00B4ED26 /* lina_dicto_for_iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7EA870422EB307A00B4ED26 /* Build configuration list for PBXNativeTarget "lina_dicto_for_iosTests" */;
+			buildPhases = (
+				A7EA86E922EB307A00B4ED26 /* Sources */,
+				A7EA86EA22EB307A00B4ED26 /* Frameworks */,
+				A7EA86EB22EB307A00B4ED26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A7EA86EF22EB307A00B4ED26 /* PBXTargetDependency */,
+			);
+			name = lina_dicto_for_iosTests;
+			productName = lina_dicto_for_iosTests;
+			productReference = A7EA86ED22EB307A00B4ED26 /* lina_dicto_for_iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A7EA86F722EB307A00B4ED26 /* lina_dicto_for_iosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7EA870722EB307A00B4ED26 /* Build configuration list for PBXNativeTarget "lina_dicto_for_iosUITests" */;
+			buildPhases = (
+				A7EA86F422EB307A00B4ED26 /* Sources */,
+				A7EA86F522EB307A00B4ED26 /* Frameworks */,
+				A7EA86F622EB307A00B4ED26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A7EA86FA22EB307A00B4ED26 /* PBXTargetDependency */,
+			);
+			name = lina_dicto_for_iosUITests;
+			productName = lina_dicto_for_iosUITests;
+			productReference = A7EA86F822EB307A00B4ED26 /* lina_dicto_for_iosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A7EA86D122EB307800B4ED26 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "Michinari Nukazawa";
+				TargetAttributes = {
+					A7EA86D822EB307800B4ED26 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					A7EA86EC22EB307A00B4ED26 = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = A7EA86D822EB307800B4ED26;
+					};
+					A7EA86F722EB307A00B4ED26 = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = A7EA86D822EB307800B4ED26;
+					};
+				};
+			};
+			buildConfigurationList = A7EA86D422EB307800B4ED26 /* Build configuration list for PBXProject "lina_dicto_for_ios" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A7EA86D022EB307800B4ED26;
+			productRefGroup = A7EA86DA22EB307800B4ED26 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A7EA86D822EB307800B4ED26 /* lina_dicto_for_ios */,
+				A7EA86EC22EB307A00B4ED26 /* lina_dicto_for_iosTests */,
+				A7EA86F722EB307A00B4ED26 /* lina_dicto_for_iosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A7EA86D722EB307800B4ED26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7EA86E722EB307A00B4ED26 /* LaunchScreen.storyboard in Resources */,
+				A7EA86E422EB307A00B4ED26 /* Assets.xcassets in Resources */,
+				A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7EA86EB22EB307A00B4ED26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7EA86F622EB307A00B4ED26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A7EA86D522EB307800B4ED26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */,
+				A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7EA86E922EB307A00B4ED26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7EA86F222EB307A00B4ED26 /* lina_dicto_for_iosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7EA86F422EB307A00B4ED26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7EA86FD22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A7EA86EF22EB307A00B4ED26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A7EA86D822EB307800B4ED26 /* lina_dicto_for_ios */;
+			targetProxy = A7EA86EE22EB307A00B4ED26 /* PBXContainerItemProxy */;
+		};
+		A7EA86FA22EB307A00B4ED26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A7EA86D822EB307800B4ED26 /* lina_dicto_for_ios */;
+			targetProxy = A7EA86F922EB307A00B4ED26 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A7EA86E022EB307800B4ED26 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A7EA86E122EB307800B4ED26 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A7EA86E522EB307A00B4ED26 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A7EA86E622EB307A00B4ED26 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A7EA86FF22EB307A00B4ED26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A7EA870022EB307A00B4ED26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A7EA870222EB307A00B4ED26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = lina_dicto_for_ios/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "daisy-bell.lina-dicto-for-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A7EA870322EB307A00B4ED26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = lina_dicto_for_ios/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "daisy-bell.lina-dicto-for-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A7EA870522EB307A00B4ED26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = lina_dicto_for_iosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "daisy-bell.lina-dicto-for-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lina_dicto_for_ios.app/lina_dicto_for_ios";
+			};
+			name = Debug;
+		};
+		A7EA870622EB307A00B4ED26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = lina_dicto_for_iosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "daisy-bell.lina-dicto-for-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lina_dicto_for_ios.app/lina_dicto_for_ios";
+			};
+			name = Release;
+		};
+		A7EA870822EB307A00B4ED26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = lina_dicto_for_iosUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "daisy-bell.lina-dicto-for-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = lina_dicto_for_ios;
+			};
+			name = Debug;
+		};
+		A7EA870922EB307A00B4ED26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = lina_dicto_for_iosUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "daisy-bell.lina-dicto-for-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = lina_dicto_for_ios;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A7EA86D422EB307800B4ED26 /* Build configuration list for PBXProject "lina_dicto_for_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7EA86FF22EB307A00B4ED26 /* Debug */,
+				A7EA870022EB307A00B4ED26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7EA870122EB307A00B4ED26 /* Build configuration list for PBXNativeTarget "lina_dicto_for_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7EA870222EB307A00B4ED26 /* Debug */,
+				A7EA870322EB307A00B4ED26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7EA870422EB307A00B4ED26 /* Build configuration list for PBXNativeTarget "lina_dicto_for_iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7EA870522EB307A00B4ED26 /* Debug */,
+				A7EA870622EB307A00B4ED26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7EA870722EB307A00B4ED26 /* Build configuration list for PBXNativeTarget "lina_dicto_for_iosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7EA870822EB307A00B4ED26 /* Debug */,
+				A7EA870922EB307A00B4ED26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A7EA86D122EB307800B4ED26 /* Project object */;
+}
