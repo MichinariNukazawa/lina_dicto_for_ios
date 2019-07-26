@@ -14,6 +14,8 @@
 		A7EA86E722EB307A00B4ED26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E522EB307A00B4ED26 /* LaunchScreen.storyboard */; };
 		A7EA86F222EB307A00B4ED26 /* lina_dicto_for_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86F122EB307A00B4ED26 /* lina_dicto_for_iosTests.swift */; };
 		A7EA86FD22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86FC22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift */; };
+		A7EA870B22EB359E00B4ED26 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA870A22EB359E00B4ED26 /* Dictionary.swift */; };
+		A7EA870E22EB388A00B4ED26 /* dictionary00.json in Resources */ = {isa = PBXBuildFile; fileRef = A7EA870D22EB388A00B4ED26 /* dictionary00.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		A7EA86F822EB307A00B4ED26 /* lina_dicto_for_iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lina_dicto_for_iosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7EA86FC22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lina_dicto_for_iosUITests.swift; sourceTree = "<group>"; };
 		A7EA86FE22EB307A00B4ED26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7EA870A22EB359E00B4ED26 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		A7EA870D22EB388A00B4ED26 /* dictionary00.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dictionary00.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 		A7EA86D022EB307800B4ED26 = {
 			isa = PBXGroup;
 			children = (
+				A7EA870C22EB386400B4ED26 /* Resources */,
 				A7EA86DB22EB307800B4ED26 /* lina_dicto_for_ios */,
 				A7EA86F022EB307A00B4ED26 /* lina_dicto_for_iosTests */,
 				A7EA86FB22EB307A00B4ED26 /* lina_dicto_for_iosUITests */,
@@ -103,6 +108,7 @@
 				A7EA86E322EB307A00B4ED26 /* Assets.xcassets */,
 				A7EA86E522EB307A00B4ED26 /* LaunchScreen.storyboard */,
 				A7EA86E822EB307A00B4ED26 /* Info.plist */,
+				A7EA870A22EB359E00B4ED26 /* Dictionary.swift */,
 			);
 			path = lina_dicto_for_ios;
 			sourceTree = "<group>";
@@ -123,6 +129,14 @@
 				A7EA86FE22EB307A00B4ED26 /* Info.plist */,
 			);
 			path = lina_dicto_for_iosUITests;
+			sourceTree = "<group>";
+		};
+		A7EA870C22EB386400B4ED26 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A7EA870D22EB388A00B4ED26 /* dictionary00.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +246,7 @@
 				A7EA86E722EB307A00B4ED26 /* LaunchScreen.storyboard in Resources */,
 				A7EA86E422EB307A00B4ED26 /* Assets.xcassets in Resources */,
 				A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */,
+				A7EA870E22EB388A00B4ED26 /* dictionary00.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +273,7 @@
 			files = (
 				A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */,
 				A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */,
+				A7EA870B22EB359E00B4ED26 /* Dictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

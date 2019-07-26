@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+open class MySample {
+    
+    public func add(a: Int, b: Int) -> Int {
+        return a + b
+    }
+    
+}
