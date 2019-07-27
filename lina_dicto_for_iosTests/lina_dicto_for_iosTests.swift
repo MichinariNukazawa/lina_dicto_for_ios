@@ -35,8 +35,8 @@ class lina_dicto_for_iosTests: XCTestCase {
         //** esperanto文字列判定
         XCTAssertEqual(isEsperanto(word: "Bona"), true)     // 1word
         XCTAssertEqual(isEsperanto(word: "Cxu"), true)      // x-sistemo
-        XCTAssertEqual(isEsperanto(word: "C^u"), true)      // ^-sistemo
-        XCTAssertEqual(isEsperanto(word: "U~"), true)      // ^-sistemo
+        XCTAssertEqual(isEsperanto(word: "C^u"), true)      // (caret)^-sistemo
+        XCTAssertEqual(isEsperanto(word: "U~"), true)       // ^-sistemo
         XCTAssertEqual(isEsperanto(word: "ĉu"), true)       // alfabeto
         XCTAssertEqual(isEsperanto(word: "Bonan matenon"), true)   // 2word
         //XCTAssertEqual(isEsperanto(word: "Bonan matenon!"), true)   // !
@@ -45,6 +45,22 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(isEsperanto(word: "恋仲"), false)          // ja
         XCTAssertEqual(isEsperanto(word: "Cxu恋仲"), false)       // ja joined
         XCTAssertEqual(isEsperanto(word: "Cxuおはよう"), false)    // ja joined
+
+        
+        XCTAssertEqual(convertCaretFromAnySistemo(str: "Ĉu"), "C^u");  // alfabeto
+        XCTAssertEqual(convertCaretFromAnySistemo(str: "ĉu"), "c^u");  // alfabeto
+        XCTAssertEqual(convertCaretFromAnySistemo(str: "Ŭ"), "U^");    // alfabeto
+        XCTAssertEqual(convertCaretFromAnySistemo(str: "Cxu"), "C^u"); // x-systemo
+        XCTAssertEqual(convertCaretFromAnySistemo(str: "Cxxu"), "C^u"); // x-systemo
+        XCTAssertEqual(convertCaretFromAnySistemo(str: "Cxxu Ŭ"), "C^u U^"); // multi
+
+        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "C^u"), "Ĉu");
+        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "c^u"), "ĉu");
+        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "U^"), "Ŭ");
+        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "U~"), "Ŭ");
+        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "U~c^"), "Ŭĉ"); // multi
+        
+        XCTAssertEqual(convertAlfabetoFromAnySistemo(str: "U~c^Cxx"), "ŬĉĈ"); // multi
     }
     
     func testDictionary(){
@@ -52,10 +68,16 @@ class lina_dicto_for_iosTests: XCTestCase {
         linad.initialize()
         var responses :[SearchResponseItem]
         
-        // ** 1word単語マッチ
+        // ** 1word単語マッチ uppercase
         responses = linad.search(searchKey: "Bona")
         XCTAssertEqual(responses.count, 1)
         XCTAssertEqual(responses[0].matchedKey, "Bona")
+        XCTAssertNotNil(responses[0].matchItem)
+        
+        // 1word単語マッチ lowercase
+        responses = linad.search(searchKey: "bona")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].matchedKey, "bona")
         XCTAssertNotNil(responses[0].matchItem)
 
         // 不正文字失敗
@@ -79,6 +101,20 @@ class lina_dicto_for_iosTests: XCTestCase {
         responses = linad.search(searchKey: " Bonan   matenon! ")
         XCTAssertEqual(responses.count, 1)
         //XCTAssertEqual(responses[0].matchedKey, "Bonan matenon!")
+        XCTAssertNotNil(responses[0].matchItem)
+        
+        // ** sistemo
+        responses = linad.search(searchKey: "C^u")  // ^-sistemo
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertNotNil(responses[0].matchItem)
+        responses = linad.search(searchKey: "Ĉu")   // alfabeto
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertNotNil(responses[0].matchItem)
+        responses = linad.search(searchKey: "Cxu")  // x-sistemo
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertNotNil(responses[0].matchItem)
+        responses = linad.search(searchKey: "Cxxu") // x-sistemo
+        XCTAssertEqual(responses.count, 1)
         XCTAssertNotNil(responses[0].matchItem)
     }
 

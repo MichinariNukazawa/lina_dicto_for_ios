@@ -61,6 +61,42 @@ func isEsperanto(word :String) -> Bool {
     return word.pregMatche(pattern: pattern);
 }
 
+func convertCaretFromAnySistemo(str :String) -> String{
+    var res = str
+
+    let replaces = [
+        ["\u{0108}", "C"],
+        ["\u{0109}", "c"],
+        ["\u{011C}", "G"],
+        ["\u{011D}", "g"],
+        ["\u{0124}", "H"],
+        ["\u{0125}", "h"],
+        ["\u{0134}", "J"],
+        ["\u{0135}", "j"],
+        ["\u{015C}", "S"],
+        ["\u{015D}", "s"],
+        ["\u{016C}", "U"],
+        ["\u{016D}", "u"],
+        ["\u{016C}", "U"],
+        ["\u{016D}", "u"],
+    ];
+    
+    for r in replaces{
+        // ** x-sistemo
+        res = res.replacingOccurrences(of: r[1] + "xx", with: r[1] + "^")
+        // ** x-sistemo
+        res = res.replacingOccurrences(of: r[1] + "x" , with: r[1] + "^")
+        // ** caret-sistemo
+        // res = res.replacingOccurrences(of: r[1] + "^", with: r[1] + "^")
+        // ** caret-sistemo ("~" -> "^")
+        res = res.replacingOccurrences(of: "U~", with: "U^")
+        res = res.replacingOccurrences(of: "u~", with: "u^")
+        // ** alfabeto
+        res = res.replacingOccurrences(of: r[0], with: r[1] + "^")
+    }
+    return res;
+}
+
 func convertAlfabetoFromCaretSistemo(str :String) -> String{
     let replaces = [
         ["\u{0108}", "C^"],
@@ -73,8 +109,10 @@ func convertAlfabetoFromCaretSistemo(str :String) -> String{
         ["\u{0135}", "j^"],
         ["\u{015C}", "S^"],
         ["\u{015D}", "s^"],
-        ["\u{016C}", "U^"],    // 公式の変換には無いがとりあえず
-        ["\u{016D}", "u^"],    // 公式の変換には無いがとりあえず
+        ["\u{016C}", "U^"],
+        ["\u{016D}", "u^"],
+        ["\u{016C}", "U~"],
+        ["\u{016D}", "u~"],
     ];
     
     var dst = str
@@ -83,6 +121,10 @@ func convertAlfabetoFromCaretSistemo(str :String) -> String{
     }
 
     return dst;
+}
+
+func convertAlfabetoFromAnySistemo(str :String) -> String{
+    return convertAlfabetoFromCaretSistemo(str: convertCaretFromAnySistemo(str: str))
 }
 
 struct DictItem : Codable{
@@ -142,7 +184,8 @@ class LDictionary{
     }
 
     func search(searchKey: String) -> [SearchResponseItem]{
-        let searchWords = searchKey.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression).split(separator: " ")
+        let searchKey_ = convertCaretFromAnySistemo(str: searchKey)
+        let searchWords = searchKey_.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression).split(separator: " ")
         
         let fullSearchKey = searchWords.joined(separator: " ")
         
@@ -205,7 +248,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
             }
             let url = generateGoogleTranslateUrl(keyword: searchKey, src_lang: src_lang, dst_lang: dst_lang)
             html = "<div " + sStyle + ">" + " not match : <a href='" + url + "'>"
-                + convertAlfabetoFromCaretSistemo(str: searchKey)
+                + convertAlfabetoFromAnySistemo(str: searchKey)
                 + "</a>" + "</div>"
         }
         do{
