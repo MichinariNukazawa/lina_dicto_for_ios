@@ -56,9 +56,8 @@ extension String {
 
 // esperantoワードか（含む文字かチェック）
 func isEsperanto(word :String) -> Bool {
-    //let pattern = "^[\\U0032-\\U0126\\U0264-\\U0365\\s^~]+$"
-    //let pattern = "^[A-Za-z0-9 ^~]+$"
-    let pattern = "^[A-Za-z0-9 ^~\u{0108}-\u{016D}]+$"
+    // 厳密なマッチではないけれど、日本語と区別できればOK
+    let pattern = "^[A-Za-z0-9 \\s^~\u{0108}-\u{016D}]+$"
     return word.pregMatche(pattern: pattern);
 }
 
@@ -125,23 +124,33 @@ class LDictionary{
         
     }
     
-    func search(searchKey: String) -> [SearchResponseItem]{
+    func searchEKeywordFullMatch(eKeyword :String) -> DictItem?{
         var match :DictItem? = nil
-        let casedSearchKey = searchKey.lowercased()
+        let casedSearchKey = eKeyword.lowercased()
         var count :Int = 0
         for dictItem in dictItems{
             var itemKey : String = dictItem.key.lowercased()
             itemKey = itemKey.removeCharacters(from: "/")
             if(itemKey == casedSearchKey){
-                //print("matched")
                 match = dictItem;
                 break
             }
             count += 1
         }
+        return match
+    
+    }
+
+    func search(searchKey: String) -> [SearchResponseItem]{
+        let searchWords = searchKey.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression).split(separator: " ")
         
+        let fullSearchKey = searchWords.joined(separator: " ")
+        
+        let match = searchEKeywordFullMatch(eKeyword: fullSearchKey);
+        //print(searchWords, match)
         var result = [SearchResponseItem]()
         let resultItem = SearchResponseItem(matchedKey: searchKey, matchItem: match)
+        print(resultItem)
         result.append(resultItem)
         return result
     }
