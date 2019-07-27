@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A724394F22EC951A0021A08B /* legumin.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394D22EC951A0021A08B /* legumin.txt */; };
+		A724395022EC951A0021A08B /* gvidilo.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394E22EC951A0021A08B /* gvidilo.txt */; };
 		A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */; };
 		A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DE22EB307800B4ED26 /* ViewController.swift */; };
 		A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E022EB307800B4ED26 /* Main.storyboard */; };
@@ -16,6 +18,7 @@
 		A7EA86FD22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86FC22EB307A00B4ED26 /* lina_dicto_for_iosUITests.swift */; };
 		A7EA870B22EB359E00B4ED26 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA870A22EB359E00B4ED26 /* Dictionary.swift */; };
 		A7EA870E22EB388A00B4ED26 /* dictionary00.json in Resources */ = {isa = PBXBuildFile; fileRef = A7EA870D22EB388A00B4ED26 /* dictionary00.json */; };
+		A7EA874A22EC8C0C00B4ED26 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7EA874922EC8C0C00B4ED26 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A724394D22EC951A0021A08B /* legumin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = legumin.txt; sourceTree = "<group>"; };
+		A724394E22EC951A0021A08B /* gvidilo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gvidilo.txt; sourceTree = "<group>"; };
 		A7EA86D922EB307800B4ED26 /* lina_dicto_for_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lina_dicto_for_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7EA86DE22EB307800B4ED26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +56,7 @@
 		A7EA86FE22EB307A00B4ED26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7EA870A22EB359E00B4ED26 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		A7EA870D22EB388A00B4ED26 /* dictionary00.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dictionary00.json; sourceTree = "<group>"; };
+		A7EA874922EC8C0C00B4ED26 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,7 @@
 		A7EA86D022EB307800B4ED26 = {
 			isa = PBXGroup;
 			children = (
+				A7EA874922EC8C0C00B4ED26 /* Settings.bundle */,
 				A7EA870C22EB386400B4ED26 /* Resources */,
 				A7EA86DB22EB307800B4ED26 /* lina_dicto_for_ios */,
 				A7EA86F022EB307A00B4ED26 /* lina_dicto_for_iosTests */,
@@ -134,6 +141,8 @@
 		A7EA870C22EB386400B4ED26 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A724394E22EC951A0021A08B /* gvidilo.txt */,
+				A724394D22EC951A0021A08B /* legumin.txt */,
 				A7EA870D22EB388A00B4ED26 /* dictionary00.json */,
 			);
 			path = Resources;
@@ -243,10 +252,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A724394F22EC951A0021A08B /* legumin.txt in Resources */,
 				A7EA86E722EB307A00B4ED26 /* LaunchScreen.storyboard in Resources */,
 				A7EA86E422EB307A00B4ED26 /* Assets.xcassets in Resources */,
+				A7EA874A22EC8C0C00B4ED26 /* Settings.bundle in Resources */,
 				A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */,
 				A7EA870E22EB388A00B4ED26 /* dictionary00.json in Resources */,
+				A724395022EC951A0021A08B /* gvidilo.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

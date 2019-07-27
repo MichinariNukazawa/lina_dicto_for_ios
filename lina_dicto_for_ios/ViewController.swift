@@ -270,6 +270,45 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         dict.initialize()
     }
     
+    func readText(filename: String, ext: String) -> String{
+        // ファイルまでのパスを取得（同時にnilチェック）
+        if let path: String = Bundle.main.path(forResource: filename, ofType: ext) {
+            do {
+                // ファイルの内容を取得する
+                let txt = try String(contentsOfFile: path)
+                return txt
+            } catch  {
+                print("ファイルの内容取得時に失敗")
+            }
+        }else {
+            print("指定されたファイルが見つかりません")
+        }
+
+        return "nothing file error."
+    }
+    
+    func command(str :String) -> Bool{
+        if(":help" == str){
+            let sHelp = ":help / このHelpを表示\n"
+                + ":gvidilo / gvidilo.txtを表示\n"
+                + ":legumin / legumin.txtを表示\n"
+            textView.text = sHelp
+            return true;
+        }
+        if(":gvidilo" == str){
+            textView.text = "# gvidilo.txt\n"
+            textView.text += readText(filename: "gvidilo", ext: "txt")
+            return true;
+        }
+        if(":legumin" == str){
+            textView.text = "# legumin.txt\n"
+            textView.text += readText(filename: "legumin", ext: "txt")
+            return true;
+        }
+        
+        return false
+    }
+    
     //検索ボタン押下時の呼び出しメソッド
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
@@ -285,6 +324,12 @@ class ViewController: UIViewController,  UISearchBarDelegate{
 
         if("(result area)" == textView.text){ // 最初の表示をクリア
             textView.text = "";
+        }
+        
+        // コマンド処理
+        if(command(str: searchKey)){
+            searchBar.text = ""
+            return
         }
 
         let sStyle = "style='font-size: 20px'"

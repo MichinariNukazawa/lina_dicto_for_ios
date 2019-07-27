@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>StringsTable</key>
+        <string>Acknowledgements</string>
+        <key>PreferenceSpecifiers</key>
+        <array>
+                <dict>
+                        <key>Type</key>
+                        <string>PSGroupSpecifier</string>
+                        <key>Title</key>
+                        <string>Licenses
+# 『実用エスペラント小辞典』（第１.８１版）
+lina_dicto用にUTF-8 JSONファイル化したものを、JSON形式内で加工し、iOSアプリケーション内のリソースとして格納しました。
+ライセンスファイルはリソースに含まれており、検索欄への「:help」入力から参照できるコマンドから閲覧できます。
+                        </string>
+                </dict>
+        </array>
+</dict>
+</plist>
