@@ -71,36 +71,46 @@ class lina_dicto_for_iosTests: XCTestCase {
         // ** 1word単語マッチ uppercase
         responses = linad.search(searchKey: "Bona")
         XCTAssertEqual(responses.count, 1)
-        XCTAssertEqual(responses[0].matchedKey, "Bona")
+        XCTAssertEqual(responses[0].matchedKeyword, "Bona")
         XCTAssertNotNil(responses[0].matchItem)
         
         // 1word単語マッチ lowercase
         responses = linad.search(searchKey: "bona")
         XCTAssertEqual(responses.count, 1)
-        XCTAssertEqual(responses[0].matchedKey, "bona")
+        XCTAssertEqual(responses[0].matchedKeyword, "bona")
         XCTAssertNotNil(responses[0].matchItem)
 
+        // 1word 末尾記号
+        responses = linad.search(searchKey: "Amrilato")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].matchedKeyword, "Amrilato")
+        XCTAssertNotNil(responses[0].matchItem)
+        responses = linad.search(searchKey: "Amrilato.")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].matchedKeyword, "Amrilato")
+        XCTAssertNotNil(responses[0].matchItem)
+        
         // 不正文字失敗
         responses = linad.search(searchKey: "Xxxxx")
         XCTAssertEqual(responses.count, 1)
-        XCTAssertEqual(responses[0].matchedKey, "Xxxxx")
+        XCTAssertEqual(responses[0].matchedKeyword, "Xxxxx")
         XCTAssertNil(responses[0].matchItem)
         // 空文字失敗
         responses = linad.search(searchKey: "")
-        XCTAssertEqual(responses.count, 1)
-        XCTAssertEqual(responses[0].matchedKey, "")
-        XCTAssertNil(responses[0].matchItem)
+        XCTAssertEqual(responses.count, 0)
+        //XCTAssertEqual(responses[0].matchedKeyword, "")
+        //XCTAssertNil(responses[0].matchItem)
 
         // ** 2word単語マッチ
         responses = linad.search(searchKey: "Bonan matenon!")
         XCTAssertEqual(responses.count, 1)
-        XCTAssertEqual(responses[0].matchedKey, "Bonan matenon!")
+        XCTAssertEqual(responses[0].matchedKeyword, "Bonan matenon")
         XCTAssertNotNil(responses[0].matchItem)
 
         // ** 空白文字対応
         responses = linad.search(searchKey: " Bonan   matenon! ")
         XCTAssertEqual(responses.count, 1)
-        //XCTAssertEqual(responses[0].matchedKey, "Bonan matenon!")
+        XCTAssertEqual(responses[0].matchedKeyword, "Bonan matenon")
         XCTAssertNotNil(responses[0].matchItem)
         
         // ** sistemo
@@ -116,6 +126,18 @@ class lina_dicto_for_iosTests: XCTestCase {
         responses = linad.search(searchKey: "Cxxu") // x-sistemo
         XCTAssertEqual(responses.count, 1)
         XCTAssertNotNil(responses[0].matchItem)
+        
+        // ** multi word multi str match
+        responses = linad.search(searchKey: "Kio estas cxi tio.")
+        XCTAssertEqual(responses.count, 3)
+        XCTAssertEqual(responses[0].matchedKeyword, "Kio")
+        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItem?.searchKeyword, "kio")
+        XCTAssertEqual(responses[1].matchedKeyword, "estas")
+        XCTAssertNil(responses[1].matchItem)
+        //XCTAssertEqual(responses[1].matchItem?.searchKeyword, "estas")
+        XCTAssertEqual(responses[2].matchedKeyword, "c^i tio")
+        XCTAssertNotNil(responses[2].matchItem)
+        XCTAssertEqual(responses[2].matchItem?.searchKeyword, "c^i tio")
     }
-
 }

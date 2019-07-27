@@ -127,12 +127,19 @@ func convertAlfabetoFromAnySistemo(str :String) -> String{
     return convertAlfabetoFromCaretSistemo(str: convertCaretFromAnySistemo(str: str))
 }
 
-struct DictItem : Codable{
+struct DictItemOfCodable : Codable{
     let key: String
     let value: String
 }
+
+struct DictItem : Codable{
+    let searchKeyword: String
+    let rawKeyword: String
+    let explanation: String
+}
+
 struct SearchResponseItem{
-    var matchedKey: String
+    var matchedKeyword: String
     var matchItem: DictItem?
 }
 class LDictionary{
@@ -147,10 +154,17 @@ class LDictionary{
                 
                 let decoder: JSONDecoder = JSONDecoder()
                 do {
-                    let dictItems_: [DictItem] = try decoder.decode([DictItem].self, from: jsonData.data(using: .utf8)!)
+                    let dictItemOfCodable: [DictItemOfCodable] = try decoder.decode([DictItemOfCodable].self, from: jsonData.data(using: .utf8)!)
                     //print(dictItems)
-                    dictItems = dictItems_
-                    
+
+                    for i in dictItemOfCodable{
+                        let searchKeyword = i.key
+                            .lowercased()
+                            .removeCharacters(from: "/")
+                            .replacingOccurrences(of: "[,//._//?!-]+", with: "", options: .regularExpression)
+                        let dictItem : DictItem = DictItem(searchKeyword: searchKeyword, rawKeyword: i.key, explanation: i.value)
+                        dictItems.append(dictItem)
+                    }
                 } catch {
                     print("error:", error.localizedDescription)
                 }
@@ -169,32 +183,73 @@ class LDictionary{
     func searchEKeywordFullMatch(eKeyword :String) -> DictItem?{
         var match :DictItem? = nil
         let casedSearchKey = eKeyword.lowercased()
-        var count :Int = 0
+
         for dictItem in dictItems{
-            var itemKey : String = dictItem.key.lowercased()
-            itemKey = itemKey.removeCharacters(from: "/")
-            if(itemKey == casedSearchKey){
+            if(casedSearchKey == dictItem.searchKeyword){
                 match = dictItem;
                 break
             }
-            count += 1
         }
         return match
     
     }
 
     func search(searchKey: String) -> [SearchResponseItem]{
+        // ** searchKeyをクリンアップし分割
         let searchKey_ = convertCaretFromAnySistemo(str: searchKey)
-        let searchWords = searchKey_.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression).split(separator: " ")
+        let searchWords = searchKey_
+            .replacingOccurrences(of: "[,//._//?!-]+", with: " ", options: .regularExpression)
+            .replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
+            .split(separator: " ")
         
-        let fullSearchKey = searchWords.joined(separator: " ")
-        
-        let match = searchEKeywordFullMatch(eKeyword: fullSearchKey);
-        //print(searchWords, match)
         var result = [SearchResponseItem]()
-        let resultItem = SearchResponseItem(matchedKey: searchKey, matchItem: match)
-        print(resultItem)
-        result.append(resultItem)
+        
+        if(searchWords.count == 0){
+            //result.append(SearchResponseItem(matchedKeyword: "", matchItem: nil))
+            return result
+        }
+        
+        // ** word全体とマッチ
+        do{
+            let fullSearchKey = searchWords.joined(separator: " ")
+            let match = searchEKeywordFullMatch(eKeyword: fullSearchKey);
+            if(match != nil){
+                result.append(SearchResponseItem(matchedKeyword: fullSearchKey, matchItem: match))
+                return result;
+            }
+        }
+
+        // 先頭から2wordずつマッチ
+        var iSearchWord = 0;
+        while(iSearchWord < searchWords.count){
+            // 2wordマッチ
+            if(2 <= (searchWords.count - iSearchWord)){
+                let joinedSearchKey :String = searchWords[iSearchWord] + " " + searchWords[iSearchWord + 1]
+                let match = searchEKeywordFullMatch(eKeyword: joinedSearchKey);
+                if(match != nil){
+                    let resultItem = SearchResponseItem(matchedKeyword: joinedSearchKey, matchItem: match)
+                    result.append(resultItem)
+                    iSearchWord += 2;
+                    continue;
+                }
+            }
+            //　1word検索
+            do{
+                let keyStr :String = String(searchWords[iSearchWord]);
+                let match = searchEKeywordFullMatch(eKeyword: keyStr);
+                if(match != nil){
+                    let resultItem = SearchResponseItem(matchedKeyword: keyStr, matchItem: match)
+                    result.append(resultItem)
+                    iSearchWord += 1;
+                    continue
+                }
+            }
+            // マッチしなかった
+            result.append(SearchResponseItem(matchedKeyword: String(searchWords[iSearchWord]), matchItem: nil))
+            iSearchWord += 1
+        }
+        
+        //print(searchWords, match)
         return result
     }
 }
@@ -222,10 +277,10 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         let searchKey = searchBar.text!
         
         
-        let result = dict.search(searchKey: searchKey)
-        var match :DictItem? = nil
-        if(0 < result.count){
-            match = result[0].matchItem
+        let searchResponseItems = dict.search(searchKey: searchKey)
+        if(searchResponseItems.count == 0){
+            // NOP
+            return;
         }
 
         if("(result area)" == textView.text){ // 最初の表示をクリア
@@ -233,23 +288,33 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         }
 
         let sStyle = "style='font-size: 20px'"
-        var html = ""
-        if(match != nil){
-            let key :String = match?.key ?? ""
-            let value :String = match?.value ?? ""
-            
-            html = "<div " + sStyle + ">" + convertAlfabetoFromCaretSistemo(str: key) + " : " + value + "</div>"
-        }else{
-            var src_lang = "eo"
-            var dst_lang = "ja"
-            if(!isEsperanto(word: searchKey)){
-                src_lang = "ja"
-                dst_lang = "eo"
+        var html :String = ""
+        for response in searchResponseItems{
+            let match = response.matchItem
+            if(match != nil){
+                let matchedKeyword :String = response.matchedKeyword
+                let explanation :String = response.matchItem?.explanation ?? ""
+                
+                let t = "<div " + sStyle + ">"
+                    + convertAlfabetoFromCaretSistemo(str: matchedKeyword) + " : " + explanation
+                    + "</div>"
+                html += t
+            }else{
+                let matchedKeyword = response.matchedKeyword
+                var src_lang = "eo"
+                var dst_lang = "ja"
+                if(!isEsperanto(word: matchedKeyword)){
+                    src_lang = "ja"
+                    dst_lang = "eo"
+                }
+                let url = generateGoogleTranslateUrl(keyword: matchedKeyword, src_lang: src_lang, dst_lang: dst_lang)
+                html += "<div " + sStyle + ">"
+                    + "<a href='" + url + "'>"
+                    + convertAlfabetoFromAnySistemo(str: matchedKeyword)
+                    + "</a>"
+                    + " : is not match."
+                    + "</div>"
             }
-            let url = generateGoogleTranslateUrl(keyword: searchKey, src_lang: src_lang, dst_lang: dst_lang)
-            html = "<div " + sStyle + ">" + " not match : <a href='" + url + "'>"
-                + convertAlfabetoFromAnySistemo(str: searchKey)
-                + "</a>" + "</div>"
         }
         do{
             
