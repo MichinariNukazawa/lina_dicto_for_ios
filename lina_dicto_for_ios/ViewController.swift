@@ -341,10 +341,6 @@ class ViewController: UIViewController,  UISearchBarDelegate{
             return;
         }
 
-        if("(result area)" == textView.text){ // 最初の表示をクリア
-            textView.text = "";
-        }
-        
         // コマンド処理
         if(command(str: searchKey)){
             searchBar.text = ""
@@ -457,6 +453,8 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 //let offsetY: CGFloat = UIScreen.main.bounds.height - convertedKeyboardFrame.minY
                 if offsetY < 0 { return }
                 updateScrollViewSize(moveSize: offsetY, duration: animationDuration)
+
+                scrollTextViewToBottom(textView: textView)
             }
         }
     }

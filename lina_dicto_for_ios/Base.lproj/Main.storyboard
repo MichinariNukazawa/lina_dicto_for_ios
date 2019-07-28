@@ -24,7 +24,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXK-MR-IFD">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="(result area)" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-eL-xdA">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-eL-xdA">
                                                 <rect key="frame" x="0.0" y="44" width="414" height="708"/>
                                                 <color key="backgroundColor" red="0.81390949432012782" green="1" blue="0.82874629283845958" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="22"/>
@@ -111,7 +111,7 @@
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKF-Hz-Dcp">
                                         <rect key="frame" x="0.0" y="667" width="317" height="151"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="151" id="dnO-IC-8iN"/>
                                         </constraints>
@@ -163,6 +163,15 @@
                                             <constraint firstAttribute="height" constant="195" id="QVc-nK-AjS"/>
                                         </constraints>
                                     </imageView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="検索欄に&quot;!help&quot;と入力することで辞書データのライセンスの閲覧等が可能です。" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="POl-N7-GZX">
+                                        <rect key="frame" x="0.0" y="54" width="309" height="79"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="79" id="Twh-SG-RqF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -174,6 +183,8 @@
                                     <constraint firstItem="WUo-u1-GHn" firstAttribute="top" secondItem="1PI-md-dw4" secondAttribute="top" constant="16" id="cti-lE-lOq"/>
                                     <constraint firstItem="gKF-Hz-Dcp" firstAttribute="centerX" secondItem="OoD-BS-kSk" secondAttribute="centerX" id="eDR-yo-dYZ"/>
                                     <constraint firstItem="OoD-BS-kSk" firstAttribute="centerX" secondItem="WUo-u1-GHn" secondAttribute="centerX" id="i9A-dS-3RN"/>
+                                    <constraint firstItem="POl-N7-GZX" firstAttribute="top" secondItem="WUo-u1-GHn" secondAttribute="bottom" constant="8" symbolic="YES" id="rsH-jV-cjH"/>
+                                    <constraint firstItem="POl-N7-GZX" firstAttribute="leading" secondItem="gKF-Hz-Dcp" secondAttribute="leading" id="wob-3P-mjv"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -182,6 +193,7 @@
                             <constraint firstItem="UJ2-84-4zi" firstAttribute="trailing" secondItem="1PI-md-dw4" secondAttribute="trailing" constant="97" id="4uf-Fp-LOW"/>
                             <constraint firstItem="1PI-md-dw4" firstAttribute="bottom" secondItem="UJ2-84-4zi" secondAttribute="bottom" id="Iz4-6d-olY"/>
                             <constraint firstItem="1PI-md-dw4" firstAttribute="top" secondItem="UJ2-84-4zi" secondAttribute="top" id="XaT-1p-hbN"/>
+                            <constraint firstItem="POl-N7-GZX" firstAttribute="width" secondItem="UJ2-84-4zi" secondAttribute="width" constant="-105" id="mgA-mW-UTw"/>
                             <constraint firstItem="1PI-md-dw4" firstAttribute="leading" secondItem="6Z6-Em-YEV" secondAttribute="leading" id="tMd-Hw-y3n"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UJ2-84-4zi"/>
