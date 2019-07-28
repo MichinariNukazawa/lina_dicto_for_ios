@@ -25,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="(result area)" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-eL-xdA">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="752"/>
+                                                <rect key="frame" x="0.0" y="44" width="414" height="708"/>
                                                 <color key="backgroundColor" red="0.81390949432012782" green="1" blue="0.82874629283845958" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="22"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -35,12 +35,24 @@
                                                 <rect key="frame" x="0.0" y="752" width="414" height="56"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </searchBar>
+                                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O1Y-Nf-8Ce">
+                                                <rect key="frame" x="0.0" y="-2" width="414" height="44"/>
+                                                <items>
+                                                    <barButtonItem title="三" id="ua3-Eh-kV3">
+                                                        <connections>
+                                                            <segue destination="ePV-u2-p2h" kind="show" identifier="segueMenu" id="Us4-Ci-DlI"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                </items>
+                                            </toolbar>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="O1Y-Nf-8Ce" firstAttribute="leading" secondItem="nwi-eL-xdA" secondAttribute="leading" id="2GM-se-WjC"/>
                                             <constraint firstAttribute="trailing" secondItem="nwi-eL-xdA" secondAttribute="trailing" id="Ehy-gO-F1E"/>
                                             <constraint firstAttribute="bottom" secondItem="d2n-52-CmU" secondAttribute="bottom" id="Gzo-dQ-LmO"/>
-                                            <constraint firstItem="nwi-eL-xdA" firstAttribute="top" secondItem="cXK-MR-IFD" secondAttribute="top" id="Kiz-W0-xSJ"/>
+                                            <constraint firstItem="nwi-eL-xdA" firstAttribute="top" secondItem="cXK-MR-IFD" secondAttribute="top" constant="44" id="Kiz-W0-xSJ"/>
+                                            <constraint firstItem="O1Y-Nf-8Ce" firstAttribute="trailing" secondItem="nwi-eL-xdA" secondAttribute="trailing" id="Q0f-oP-mSg"/>
                                             <constraint firstItem="nwi-eL-xdA" firstAttribute="trailing" secondItem="d2n-52-CmU" secondAttribute="trailing" id="Rva-W7-Wmb"/>
                                             <constraint firstItem="nwi-eL-xdA" firstAttribute="leading" secondItem="d2n-52-CmU" secondAttribute="leading" id="etP-pW-pCA"/>
                                             <constraint firstItem="nwi-eL-xdA" firstAttribute="leading" secondItem="cXK-MR-IFD" secondAttribute="leading" id="gfP-ii-f7e"/>
@@ -63,6 +75,7 @@
                             <constraint firstItem="2wu-Kj-0lq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="GHV-ig-Hge"/>
                             <constraint firstItem="2wu-Kj-0lq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="SRa-Q1-WnM"/>
                             <constraint firstAttribute="trailing" secondItem="2wu-Kj-0lq" secondAttribute="trailing" id="jOl-4O-xSp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="O1Y-Nf-8Ce" secondAttribute="top" constant="-8" id="ndl-v4-9ga"/>
                             <constraint firstItem="2wu-Kj-0lq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="pJf-TN-tKF"/>
                             <constraint firstItem="2wu-Kj-0lq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qKC-e8-cyb"/>
                         </constraints>
@@ -78,5 +91,109 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="71.651785714285708"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="qeh-lI-kvo">
+            <objects>
+                <viewController storyboardIdentifier="viewMenu" id="ePV-u2-p2h" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Z6-Em-YEV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1PI-md-dw4">
+                                <rect key="frame" x="0.0" y="44" width="317" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUo-u1-GHn">
+                                        <rect key="frame" x="139" y="16" width="39" height="30"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <segue destination="CI2-Ep-3UP" kind="unwind" unwindAction="unwindToFirstViewWithSegue:" id="PT1-cf-azv"/>
+                                        </connections>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKF-Hz-Dcp">
+                                        <rect key="frame" x="0.0" y="667" width="317" height="151"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="151" id="dnO-IC-8iN"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="質問やサポートに関する">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name=".HiraKakuInterface-W3"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="問題についてのお問い合わせ先。">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name=".HiraKakuInterface-W3"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="https://twitter.com">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                                    <url key="NSLink" string="mailto:michinari.nukazawa@gmail.com"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="/MNukazawa   Created by : project daisy bell 2019">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" lookupSuggestion="YES"/>
+                                    </textView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="OoD-BS-kSk">
+                                        <rect key="frame" x="38" y="311.5" width="241" height="195"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="195" id="QVc-nK-AjS"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="OoD-BS-kSk" firstAttribute="leading" secondItem="1PI-md-dw4" secondAttribute="leading" constant="38" id="4VH-p2-jNh"/>
+                                    <constraint firstAttribute="trailing" secondItem="gKF-Hz-Dcp" secondAttribute="trailing" id="6EA-UQ-Tj0"/>
+                                    <constraint firstAttribute="bottom" secondItem="gKF-Hz-Dcp" secondAttribute="bottom" id="9wY-Qi-CQz"/>
+                                    <constraint firstItem="OoD-BS-kSk" firstAttribute="centerY" secondItem="1PI-md-dw4" secondAttribute="centerY" id="JkS-z9-mWp"/>
+                                    <constraint firstItem="gKF-Hz-Dcp" firstAttribute="leading" secondItem="1PI-md-dw4" secondAttribute="leading" id="anN-qE-mMi"/>
+                                    <constraint firstItem="WUo-u1-GHn" firstAttribute="top" secondItem="1PI-md-dw4" secondAttribute="top" constant="16" id="cti-lE-lOq"/>
+                                    <constraint firstItem="gKF-Hz-Dcp" firstAttribute="centerX" secondItem="OoD-BS-kSk" secondAttribute="centerX" id="eDR-yo-dYZ"/>
+                                    <constraint firstItem="OoD-BS-kSk" firstAttribute="centerX" secondItem="WUo-u1-GHn" secondAttribute="centerX" id="i9A-dS-3RN"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="UJ2-84-4zi" firstAttribute="trailing" secondItem="1PI-md-dw4" secondAttribute="trailing" constant="97" id="4uf-Fp-LOW"/>
+                            <constraint firstItem="1PI-md-dw4" firstAttribute="bottom" secondItem="UJ2-84-4zi" secondAttribute="bottom" id="Iz4-6d-olY"/>
+                            <constraint firstItem="1PI-md-dw4" firstAttribute="top" secondItem="UJ2-84-4zi" secondAttribute="top" id="XaT-1p-hbN"/>
+                            <constraint firstItem="1PI-md-dw4" firstAttribute="leading" secondItem="6Z6-Em-YEV" secondAttribute="leading" id="tMd-Hw-y3n"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="UJ2-84-4zi"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0I2-4u-diT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="CI2-Ep-3UP" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="789.50892857142856"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="icon.png" width="1024" height="1024"/>
+    </resources>
 </document>

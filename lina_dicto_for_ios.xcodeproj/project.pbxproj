@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A724394F22EC951A0021A08B /* legumin.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394D22EC951A0021A08B /* legumin.txt */; };
 		A724395022EC951A0021A08B /* gvidilo.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394E22EC951A0021A08B /* gvidilo.txt */; };
+		A790225F22EDA571001C2062 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A790225E22EDA571001C2062 /* icon.png */; };
 		A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */; };
 		A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DE22EB307800B4ED26 /* ViewController.swift */; };
 		A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E022EB307800B4ED26 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		A724394D22EC951A0021A08B /* legumin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = legumin.txt; sourceTree = "<group>"; };
 		A724394E22EC951A0021A08B /* gvidilo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gvidilo.txt; sourceTree = "<group>"; };
+		A790225E22EDA571001C2062 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A7EA86D922EB307800B4ED26 /* lina_dicto_for_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lina_dicto_for_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7EA86DE22EB307800B4ED26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		A7EA870C22EB386400B4ED26 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A790225E22EDA571001C2062 /* icon.png */,
 				A724394E22EC951A0021A08B /* gvidilo.txt */,
 				A724394D22EC951A0021A08B /* legumin.txt */,
 				A7EA870D22EB388A00B4ED26 /* dictionary00.json */,
@@ -256,6 +259,7 @@
 				A7EA86E722EB307A00B4ED26 /* LaunchScreen.storyboard in Resources */,
 				A7EA86E422EB307A00B4ED26 /* Assets.xcassets in Resources */,
 				A7EA874A22EC8C0C00B4ED26 /* Settings.bundle in Resources */,
+				A790225F22EDA571001C2062 /* icon.png in Resources */,
 				A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */,
 				A7EA870E22EB388A00B4ED26 /* dictionary00.json in Resources */,
 				A724395022EC951A0021A08B /* gvidilo.txt in Resources */,

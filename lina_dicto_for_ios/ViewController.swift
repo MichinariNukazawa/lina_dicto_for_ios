@@ -304,21 +304,24 @@ class ViewController: UIViewController,  UISearchBarDelegate{
     }
     
     func command(str :String) -> Bool{
-        if(":help" == str){
-            let sHelp = ":help / このHelpを表示\n"
-                + ":gvidilo / gvidilo.txtを表示\n"
-                + ":legumin / legumin.txtを表示\n"
+        if("!help" == str){
+            let sHelp = "!help / このHelpを表示\n"
+                + "!gvidilo / gvidilo.txtを表示\n"
+                + "!legumin / legumin.txtを表示\n"
             textView.text = sHelp
+            textView.scrollRangeToVisible(NSMakeRange(1, 1))
             return true;
         }
-        if(":gvidilo" == str){
+        if("!gvidilo" == str){
             textView.text = "# gvidilo.txt\n"
             textView.text += readText(filename: "gvidilo", ext: "txt")
+            textView.scrollRangeToVisible(NSMakeRange(1, 1))
             return true;
         }
-        if(":legumin" == str){
+        if("!legumin" == str){
             textView.text = "# legumin.txt\n"
             textView.text += readText(filename: "legumin", ext: "txt")
+            textView.scrollRangeToVisible(NSMakeRange(1, 1))
             return true;
         }
         
@@ -396,6 +399,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         }
         
         searchBar.text = ""
+        scrollTextViewToBottom(textView: textView)
     }
 
     
@@ -488,5 +492,18 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         // todo scrollViewの下部にできる空白領域を取り除く
     }
     
+    
+    // ------------
+    //
+    // ------------
+
+    /// Storyboadでunwind sequeを引くために必要
+    @IBAction func unwindToFirstView(segue: UIStoryboardSegue) {
+    }
+
+    // ------------
+    //
+    // ------------
+
 }
 
