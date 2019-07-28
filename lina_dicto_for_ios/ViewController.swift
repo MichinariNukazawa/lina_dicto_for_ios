@@ -347,16 +347,25 @@ class ViewController: UIViewController,  UISearchBarDelegate{
             return
         }
 
-        let sStyle = "style='font-size: 20px'"
         var html :String = ""
+        do{
+            let sSearchStyle = "style='font-size: 14px; background-color:rgba(128,256,128,0.6); width:100%'"
+            let showSearchKey = searchKey.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
+            //showSearchKey = convertAlfabetoFromAnySistemo(str: showSearchKey)
+            let t = "<div " + sSearchStyle + ">"
+                + "＞" + showSearchKey + ""
+                + "</div>"
+            html += t
+        }
+        let sResponseStyle = "style='font-size: 20px'"
         for response in searchResponseItems{
             let match = response.matchItem
             if(match != nil){
                 let matchedKeyword :String = response.matchedKeyword
                 let explanation :String = response.matchItem?.explanation ?? ""
                 
-                let t = "<div " + sStyle + ">"
-                    + convertAlfabetoFromCaretSistemo(str: matchedKeyword) + " : " + explanation
+                let t = "<div " + sResponseStyle + ">"
+                    + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
                     + "</div>"
                 html += t
             }else{
@@ -368,7 +377,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                     dst_lang = "eo"
                 }
                 let url = generateGoogleTranslateUrl(keyword: matchedKeyword, src_lang: src_lang, dst_lang: dst_lang)
-                html += "<div " + sStyle + ">"
+                html += "<div " + sResponseStyle + ">"
                     + "<a href='" + url + "'>"
                     + convertAlfabetoFromAnySistemo(str: matchedKeyword)
                     + "</a>"
@@ -376,26 +385,27 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                     + "</div>"
             }
         }
-        do{
-            
-            let encoded = html.data(using: String.Encoding.utf8)!
-            let attributedOptions : [NSAttributedString.DocumentReadingOptionKey : Any] = [
-                .documentType : NSAttributedString.DocumentType.html,
-                .characterEncoding : String.Encoding.utf8.rawValue
-            ]
-            let attributedTxt = try! NSAttributedString(data: encoded,
-                                                        options: attributedOptions,
-                                                        documentAttributes: nil)
-
-            let t :NSAttributedString = textView.attributedText!
-            let tNsmStr = NSMutableAttributedString()
-            tNsmStr.append(t)
-            tNsmStr.append(attributedTxt)
-            textView.attributedText = tNsmStr
-        }
+        addHtmlForTextView(html: html)
         
         searchBar.text = ""
         scrollTextViewToBottom(textView: textView)
+    }
+    
+    func addHtmlForTextView(html :String){
+        let encoded = html.data(using: String.Encoding.utf8)!
+        let attributedOptions : [NSAttributedString.DocumentReadingOptionKey : Any] = [
+            .documentType : NSAttributedString.DocumentType.html,
+            .characterEncoding : String.Encoding.utf8.rawValue
+        ]
+        let attributedTxt = try! NSAttributedString(data: encoded,
+                                                    options: attributedOptions,
+                                                    documentAttributes: nil)
+        
+        let t :NSAttributedString = textView.attributedText!
+        let tNsmStr = NSMutableAttributedString()
+        tNsmStr.append(t)
+        tNsmStr.append(attributedTxt)
+        textView.attributedText = tNsmStr
     }
 
     
