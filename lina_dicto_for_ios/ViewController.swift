@@ -357,7 +357,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 + "</div>"
             html += t
         }
-        let sResponseStyle = "style='font-size: 20px'"
+        let sResponseStyle = "style='font-size: 22px'"
         for response in searchResponseItems{
             let match = response.matchItem
             if(match != nil){
@@ -378,10 +378,16 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 }
                 let url = generateGoogleTranslateUrl(keyword: matchedKeyword, src_lang: src_lang, dst_lang: dst_lang)
                 html += "<div " + sResponseStyle + ">"
-                    + "<a href='" + url + "'>"
                     + convertAlfabetoFromAnySistemo(str: matchedKeyword)
-                    + "</a>"
                     + " : is not match."
+                    + "<br>"
+                    
+                    + "<span style='font-size: 16px'>"
+                    + "  (" + "<a href='" + url + "'>"
+                    + "open browser google translate `"
+                    + convertAlfabetoFromAnySistemo(str: matchedKeyword)
+                    + "`"
+                    + "</a>)<span>"
                     + "</div>"
             }
         }
