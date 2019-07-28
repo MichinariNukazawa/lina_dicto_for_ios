@@ -8,6 +8,16 @@
 
 import UIKit
 
+func log(debug: Any = "",
+           function: String = #function,
+           file: String = #file,
+           line: Int = #line) {
+    var filename = file
+    if let nss = NSString(utf8String: filename){
+        filename = nss.lastPathComponent
+    }
+    Swift.print("Log:\(filename):L\(line):\(function) \(debug)")
+}
 
 extension String {
     
@@ -254,10 +264,16 @@ class LDictionary{
     }
 }
 
+
+// ------------
+//
+// ------------
+
 class ViewController: UIViewController,  UISearchBarDelegate{
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var dict = LDictionary()
 
@@ -381,5 +397,96 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         
         searchBar.text = ""
     }
+
+    
+    // ------------
+    //
+    // ------------
+    
+    func scrollTextViewToBottom(textView: UITextView) {
+        if textView.text.count > 0 {
+            let location = textView.text.count - 1
+            let bottom = NSMakeRange(location, 1)
+            textView.scrollRangeToVisible(bottom)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // キーボードイベントの監視開始
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillBeShown(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillBeShown(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // キーボードイベントの監視解除
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
+    
+    // キーボードが表示された時に呼ばれる
+    @objc func keyboardWillBeShown(notification: NSNotification) {
+        print("keyboard")
+        if let userInfo = notification.userInfo {
+            if let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue, let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue {
+                restoreScrollViewSize()
+                
+                let convertedKeyboardFrame = scrollView.convert(keyboardFrame, from: nil)
+                let dirtyMagickNumberPixel = 4 // iPad mini2 12.4実機で起こった被りを汚く対処
+                // 本AppのsearchBarは画面下端なのできKeyboardだけ見ればOK。
+                let offsetY: CGFloat = convertedKeyboardFrame.height + CGFloat(dirtyMagickNumberPixel)
+                // https://qiita.com/takabosoft/items/51d33ec97970e4232cf0
+                // -> iOS12では対応済みなのか（？）heightで正しく動作してる模様
+                //let offsetY: CGFloat = UIScreen.main.bounds.height - convertedKeyboardFrame.minY
+                if offsetY < 0 { return }
+                updateScrollViewSize(moveSize: offsetY, duration: animationDuration)
+            }
+        }
+    }
+    
+    // キーボードが閉じられた時に呼ばれる
+    @objc func keyboardWillBeHidden(notification: NSNotification) {
+        log()
+        restoreScrollViewSize()
+    }
+    
+    // moveSize分Y方向にスクロールさせる
+    func updateScrollViewSize(moveSize: CGFloat, duration: TimeInterval) {
+        log()
+        
+        UIView.beginAnimations("ResizeForKeyboard", context: nil)
+        UIView.setAnimationDuration(duration)
+
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: moveSize, right: 0)
+        log(debug: scrollView.contentInset)
+        log(debug: scrollView.scrollIndicatorInsets)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+        //crollView.contentOffset = CGPoint(x: 0, y: moveSize)
+        
+        UIView.commitAnimations()
+    }
+    
+    func restoreScrollViewSize() {
+        log()
+        // キーボードが閉じられた時に、スクロールした分を戻す
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+        // todo scrollViewの下部にできる空白領域を取り除く
+    }
+    
 }
 

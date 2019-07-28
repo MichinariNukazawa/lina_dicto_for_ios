@@ -18,37 +18,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d2n-52-CmU">
-                                <rect key="frame" x="0.0" y="54" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="(result area)" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-eL-xdA">
-                                <rect key="frame" x="0.0" y="110" width="414" height="752"/>
-                                <color key="backgroundColor" red="0.81390949432012782" green="1" blue="0.82874629283845958" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                            </textView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wu-Kj-0lq">
+                                <rect key="frame" x="0.0" y="54" width="414" height="808"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXK-MR-IFD">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="(result area)" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-eL-xdA">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="752"/>
+                                                <color key="backgroundColor" red="0.81390949432012782" green="1" blue="0.82874629283845958" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="22"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
+                                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d2n-52-CmU">
+                                                <rect key="frame" x="0.0" y="752" width="414" height="56"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </searchBar>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="nwi-eL-xdA" secondAttribute="trailing" id="Ehy-gO-F1E"/>
+                                            <constraint firstAttribute="bottom" secondItem="d2n-52-CmU" secondAttribute="bottom" id="Gzo-dQ-LmO"/>
+                                            <constraint firstItem="nwi-eL-xdA" firstAttribute="top" secondItem="cXK-MR-IFD" secondAttribute="top" id="Kiz-W0-xSJ"/>
+                                            <constraint firstItem="nwi-eL-xdA" firstAttribute="trailing" secondItem="d2n-52-CmU" secondAttribute="trailing" id="Rva-W7-Wmb"/>
+                                            <constraint firstItem="nwi-eL-xdA" firstAttribute="leading" secondItem="d2n-52-CmU" secondAttribute="leading" id="etP-pW-pCA"/>
+                                            <constraint firstItem="nwi-eL-xdA" firstAttribute="leading" secondItem="cXK-MR-IFD" secondAttribute="leading" id="gfP-ii-f7e"/>
+                                            <constraint firstItem="d2n-52-CmU" firstAttribute="top" secondItem="nwi-eL-xdA" secondAttribute="bottom" id="rga-JH-ZMO"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="cXK-MR-IFD" firstAttribute="leading" secondItem="2wu-Kj-0lq" secondAttribute="leading" id="BDU-cX-UYC"/>
+                                    <constraint firstItem="cXK-MR-IFD" firstAttribute="top" secondItem="2wu-Kj-0lq" secondAttribute="top" id="Wp1-lL-rP3"/>
+                                    <constraint firstAttribute="bottom" secondItem="cXK-MR-IFD" secondAttribute="bottom" id="YHN-o5-U6w"/>
+                                    <constraint firstAttribute="trailing" secondItem="cXK-MR-IFD" secondAttribute="trailing" id="hLD-F5-WsF"/>
+                                    <constraint firstItem="cXK-MR-IFD" firstAttribute="centerY" secondItem="2wu-Kj-0lq" secondAttribute="centerY" id="wTX-BM-ZcO"/>
+                                    <constraint firstItem="cXK-MR-IFD" firstAttribute="centerX" secondItem="2wu-Kj-0lq" secondAttribute="centerX" id="x0K-c0-lTe"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="d2n-52-CmU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="EbX-bn-uSD"/>
-                            <constraint firstItem="d2n-52-CmU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Hmg-ff-wMH"/>
-                            <constraint firstItem="nwi-eL-xdA" firstAttribute="trailing" secondItem="d2n-52-CmU" secondAttribute="trailing" id="OZQ-AJ-flY"/>
-                            <constraint firstItem="nwi-eL-xdA" firstAttribute="top" secondItem="d2n-52-CmU" secondAttribute="bottom" id="PBv-0P-eGH"/>
-                            <constraint firstItem="d2n-52-CmU" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="Urz-bQ-SOm"/>
-                            <constraint firstItem="nwi-eL-xdA" firstAttribute="leading" secondItem="d2n-52-CmU" secondAttribute="leading" id="d8J-nY-GLq"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="nwi-eL-xdA" secondAttribute="bottom" id="hfA-VF-Xu0"/>
+                            <constraint firstItem="2wu-Kj-0lq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="GHV-ig-Hge"/>
+                            <constraint firstItem="2wu-Kj-0lq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="SRa-Q1-WnM"/>
+                            <constraint firstAttribute="trailing" secondItem="2wu-Kj-0lq" secondAttribute="trailing" id="jOl-4O-xSp"/>
+                            <constraint firstItem="2wu-Kj-0lq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="pJf-TN-tKF"/>
+                            <constraint firstItem="2wu-Kj-0lq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qKC-e8-cyb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="scrollView" destination="2wu-Kj-0lq" id="y25-1e-S8E"/>
                         <outlet property="searchBar" destination="d2n-52-CmU" id="ka9-Sk-Nw9"/>
                         <outlet property="textView" destination="nwi-eL-xdA" id="Bgl-ja-UJN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="71.651785714285708"/>
         </scene>
     </scenes>
 </document>
