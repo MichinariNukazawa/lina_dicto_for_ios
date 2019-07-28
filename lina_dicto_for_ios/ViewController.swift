@@ -436,7 +436,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                                                name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillBeShown(notification:)),
+                                               selector: #selector(keyboardWillBeHidden(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
@@ -455,7 +455,6 @@ class ViewController: UIViewController,  UISearchBarDelegate{
     
     // キーボードが表示された時に呼ばれる
     @objc func keyboardWillBeShown(notification: NSNotification) {
-        print("keyboard")
         if let userInfo = notification.userInfo {
             if let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue, let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue {
                 restoreScrollViewSize()
@@ -477,33 +476,25 @@ class ViewController: UIViewController,  UISearchBarDelegate{
     
     // キーボードが閉じられた時に呼ばれる
     @objc func keyboardWillBeHidden(notification: NSNotification) {
-        log()
         restoreScrollViewSize()
     }
     
     // moveSize分Y方向にスクロールさせる
     func updateScrollViewSize(moveSize: CGFloat, duration: TimeInterval) {
-        log()
-        
         UIView.beginAnimations("ResizeForKeyboard", context: nil)
         UIView.setAnimationDuration(duration)
 
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: moveSize, right: 0)
-        log(debug: scrollView.contentInset)
-        log(debug: scrollView.scrollIndicatorInsets)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-        //crollView.contentOffset = CGPoint(x: 0, y: moveSize)
         
         UIView.commitAnimations()
     }
     
     func restoreScrollViewSize() {
-        log()
         // キーボードが閉じられた時に、スクロールした分を戻す
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
-        // todo scrollViewの下部にできる空白領域を取り除く
     }
     
     
