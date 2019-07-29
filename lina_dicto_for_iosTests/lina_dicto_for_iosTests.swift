@@ -38,6 +38,7 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(isEsperanto(word: "C^u"), true)      // (caret)^-sistemo
         XCTAssertEqual(isEsperanto(word: "U~"), true)       // ^-sistemo
         XCTAssertEqual(isEsperanto(word: "ĉu"), true)       // alfabeto
+        XCTAssertEqual(isEsperanto(word: "Amrilato"), true)
         XCTAssertEqual(isEsperanto(word: "Bonan matenon"), true)   // 2word
         //XCTAssertEqual(isEsperanto(word: "Bonan matenon!"), true)   // !
         //XCTAssertEqual(isEsperanto(word: "Bonan matenon."), true)   // .
