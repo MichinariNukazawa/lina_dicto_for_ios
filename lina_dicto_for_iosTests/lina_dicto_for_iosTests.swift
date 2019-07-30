@@ -141,4 +141,47 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertNotNil(responses[2].matchItem)
         XCTAssertEqual(responses[2].matchItem?.searchKeyword, "c^i tio")
     }
+    
+    func testTokenize(){
+        let data = [
+            ["disk", ["disk"]],
+            ["-emulo", ["-emulo"]], // 接尾辞表記 [Praktika Esperanto-Japana Vortareto.]( https://www.vastalto.com/jpn/ )
+            ["kotonoha amrilato", ["kotonoha", "amrilato"]],
+            ["        disk", ["disk"]], // 空白除去
+            [" kotonoha    amrilato ", ["kotonoha", "amrilato"]],
+            ["Kio estas tio?", ["Kio", "estas", "tio"]], // 末尾記号は消える
+            ["Ĉu vi amas s^in?", ["Ĉu", "vi", "amas", "s^in"]], // ^-sistemo alfabeto
+            ["Cxu vi amas s^in?", ["Cxu", "vi", "amas", "s^in"]], // ^-sistemo x-sistemo
+            ["Fomalhaŭt/o", ["Fomalhaŭt/o"]],  // alfabeto
+            ["Fomalhau~t/o", ["Fomalhau~t/o"]], // ^-sistemo && `~`を含む単語の動作確認
+            ["Sxia(Rin).", ["Sxia", "Rin"]], // 記号
+            ["SukeraSparo", ["Sukera", "Sparo"]], // 大文字始まりは大文字を区切り
+            // TODO ["kHz", ["kHz"]], // 大文字始まりでなければ大文字区切りしない
+            ["LKK", ["LKK"]], // 大文字始まりでなければ大文字区切りしない
+            ["Uaz", ["Uaz"]], // 小文字が前になければ大文字区切りしない
+            ["TV-stacio", ["TV-stacio"]], // 小文字が前になければ大文字区切りしない
+            ["SukeraSparoのスペースにPanoを持ってくると", ["Sukera", "Sparo", "のスペースに", "Pano", "を持ってくると"]], // 日本語混在
+        ]
+        
+        for d in data{
+            let key :String = d[0] as! String
+            let value :[String] = d[1] as! [String]
+            let res = Tokenizer.preTokenizeEsperanto(text: key)
+            XCTAssertEqual(res, value)
+        }
+
+        
+        let dataA = [
+            ["Cxu vi amas s^in?", ["Cxu", "vi", "amas", "s^in"]], // ^-sistemo x-sistemo
+            ["Kio estas cxi tio.", ["Kio", "estas", "cxi", "tio"]],
+//            ["SukeraSparoのスペースにPanoを持ってくると", ["Sukera", "Sparo", "の", "スペース", "に", "Pano", "を", "持っ", "て", "くる", "と"]], // 日本語混在
+        ]
+
+        for d in dataA{
+            let key :String = d[0] as! String
+            let value :[String] = d[1] as! [String]
+            let res = Tokenizer.tokenize(text: key)
+            XCTAssertEqual(res, value)
+        }
+    }
 }

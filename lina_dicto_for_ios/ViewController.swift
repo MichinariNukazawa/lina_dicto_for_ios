@@ -19,8 +19,12 @@ func log(debug: Any = "",
     Swift.print("Log:\(filename):L\(line):\(function) \(debug)")
 }
 
+// ------------
+//
+// ------------
+
+
 extension String {
-    
     func removeCharacters(from forbiddenChars: CharacterSet) -> String {
         let passed = self.unicodeScalars.filter { !forbiddenChars.contains($0) }
         return String(String.UnicodeScalarView(passed))
@@ -137,6 +141,64 @@ func convertAlfabetoFromAnySistemo(str :String) -> String{
     return convertAlfabetoFromCaretSistemo(str: convertCaretFromAnySistemo(str: str))
 }
 
+
+// ------------
+//
+// ------------
+struct Tokenizer {
+    
+    //let patternLowerCase =
+    
+    // 記号で分割する(記号の除去を兼ねる)
+    // TODO エスペラント文字列とそれ以外で分割する
+    // TODO 大文字始まりで小文字に続く大文字で分割する
+    
+    static func preTokenizeEsperanto(text: String) -> [String]{
+        let patternEsperantoChar = "[A-Za-z0-9 \u{0108}-\u{016D}\\s^~\\ß/-]"
+        let patternUpperCase = "A-Z\u{0108}\u{011C}\u{0124}\u{0134}\u{015C}\u{016C}"
+        
+        var t :String = text
+        // "-,/"は除去・分割対象に含めない。
+        t = t.replacingOccurrences(of: "[,._?!()|]+", with: " ", options: .regularExpression)
+        t = t.replacingOccurrences(of: "([\(patternUpperCase)]+[^\(patternUpperCase)])", with: " $1", options: .regularExpression)
+        t = t.replacingOccurrences(of: "[\(patternEsperantoChar)]+", with: " $0 ", options: .regularExpression)
+        t = t.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
+        let r = t.split(separator: " ")
+        return r.map(String.init)
+    }
+    
+    // MARK: - Publics
+    static func preTokenizeJapanese(text: String) -> [String] {
+        let range = text.startIndex ..< text.endIndex
+        var tokens: [String] = []
+
+        text.enumerateSubstrings(in: range, options: .byWords) { (substring, _, _, _) -> () in
+            if let substring = substring {
+                tokens.append(substring)
+            }
+        }
+        
+        return tokens
+    }
+    
+    static func tokenize(text: String) -> [String]{
+        let ss1 = preTokenizeEsperanto(text: text)
+        var ss2 : [String] = []
+        for s in ss1{
+            if(isEsperanto(word: s)){
+                ss2.append(s)
+            }else{
+                ss2 += preTokenizeJapanese(text: s)
+            }
+        }
+        return ss2
+    }
+}
+    
+// ------------
+//
+// ------------
+
 struct DictItemOfCodable : Codable{
     let key: String
     let value: String
@@ -207,10 +269,7 @@ class LDictionary{
     func search(searchKey: String) -> [SearchResponseItem]{
         // ** searchKeyをクリンアップし分割
         let searchKey_ = convertCaretFromAnySistemo(str: searchKey)
-        let searchWords = searchKey_
-            .replacingOccurrences(of: "[,//._//?!-]+", with: " ", options: .regularExpression)
-            .replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
-            .split(separator: " ")
+        let searchWords = Tokenizer.tokenize(text: searchKey_)
         
         var result = [SearchResponseItem]()
         
