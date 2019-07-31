@@ -204,7 +204,7 @@ struct DictItemOfCodable : Codable{
     let value: String
 }
 
-struct DictItem : Codable{
+struct DictItem{
     let searchKeyword: String
     let rawKeyword: String
     let explanation: String
@@ -215,7 +215,7 @@ struct SearchResponseItem{
     var matchItem: DictItem?
 }
 class LDictionary{
-    private var dictItems = [DictItem]()
+    private var dictItems = [String : DictItem]()
     
     func initialize(){
         // ファイルまでのパスを取得（同時にnilチェック）
@@ -235,7 +235,7 @@ class LDictionary{
                             .removeCharacters(from: "/")
                             .replacingOccurrences(of: "[,//._//?!-]+", with: "", options: .regularExpression)
                         let dictItem : DictItem = DictItem(searchKeyword: searchKeyword, rawKeyword: i.key, explanation: i.value)
-                        dictItems.append(dictItem)
+                        dictItems[searchKeyword] = dictItem
                     }
                 } catch {
                     print("error:", error.localizedDescription)
@@ -253,17 +253,8 @@ class LDictionary{
     }
     
     func searchEKeywordFullMatch(eKeyword :String) -> DictItem?{
-        var match :DictItem? = nil
         let casedSearchKey = eKeyword.lowercased()
-
-        for dictItem in dictItems{
-            if(casedSearchKey == dictItem.searchKeyword){
-                match = dictItem;
-                break
-            }
-        }
-        return match
-    
+        return dictItems[casedSearchKey]
     }
 
     func search(searchKey: String) -> [SearchResponseItem]{
