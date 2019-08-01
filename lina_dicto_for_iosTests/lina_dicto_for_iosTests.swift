@@ -40,6 +40,9 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(isEsperanto(word: "ĉu"), true)       // alfabeto
         XCTAssertEqual(isEsperanto(word: "Amrilato"), true)
         XCTAssertEqual(isEsperanto(word: "Bonan matenon"), true)   // 2word
+        XCTAssertEqual(isEsperanto(word: "Amrilato."), true)
+        XCTAssertEqual(isEsperanto(word: "Bonan matenon!"), true)
+        XCTAssertEqual(isEsperanto(word: "Kiso?"), true)
         //XCTAssertEqual(isEsperanto(word: "Bonan matenon!"), true)   // !
         //XCTAssertEqual(isEsperanto(word: "Bonan matenon."), true)   // .
         XCTAssertEqual(isEsperanto(word: "おはよう"), false)       // ja
@@ -72,74 +75,102 @@ class lina_dicto_for_iosTests: XCTestCase {
         // ** 1word単語マッチ uppercase
         responses = linad.search(searchKey: "Bona")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Bona")
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         
         // 1word単語マッチ lowercase
         responses = linad.search(searchKey: "bona")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "bona")
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 1)
 
         // 1word 末尾記号
         responses = linad.search(searchKey: "Amrilato")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Amrilato")
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         responses = linad.search(searchKey: "Amrilato.")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Amrilato")
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         
         // 不正文字失敗
         responses = linad.search(searchKey: "Xxxxx")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Xxxxx")
-        XCTAssertNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 0)
         // 空文字失敗
         responses = linad.search(searchKey: "")
         XCTAssertEqual(responses.count, 0)
         //XCTAssertEqual(responses[0].matchedKeyword, "")
-        //XCTAssertNil(responses[0].matchItem)
+        //XCTAssertEqual(responses[0].matchItems.count, 0)
 
         // ** 2word単語マッチ
         responses = linad.search(searchKey: "Bonan matenon!")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Bonan matenon")
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 1)
 
         // ** 空白文字対応
         responses = linad.search(searchKey: " Bonan   matenon! ")
         XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Bonan matenon")
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         
         // ** sistemo
         responses = linad.search(searchKey: "C^u")  // ^-sistemo
         XCTAssertEqual(responses.count, 1)
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         responses = linad.search(searchKey: "Ĉu")   // alfabeto
         XCTAssertEqual(responses.count, 1)
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         responses = linad.search(searchKey: "Cxu")  // x-sistemo
         XCTAssertEqual(responses.count, 1)
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         responses = linad.search(searchKey: "Cxxu") // x-sistemo
         XCTAssertEqual(responses.count, 1)
-        XCTAssertNotNil(responses[0].matchItem)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
         
         // ** multi word multi str match
         responses = linad.search(searchKey: "Kio estas cxi tio.")
         XCTAssertEqual(responses.count, 3)
+        XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Kio")
-        XCTAssertNotNil(responses[0].matchItem)
-        XCTAssertEqual(responses[0].matchItem?.searchKeyword, "kio")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "kio")
+        XCTAssertEqual(responses[1].lang, "eo")
         XCTAssertEqual(responses[1].matchedKeyword, "estas")
-        XCTAssertNil(responses[1].matchItem)
+        XCTAssertEqual(responses[1].matchItems.count, 0)
         //XCTAssertEqual(responses[1].matchItem?.searchKeyword, "estas")
+        XCTAssertEqual(responses[2].lang, "eo")
         XCTAssertEqual(responses[2].matchedKeyword, "c^i tio")
-        XCTAssertNotNil(responses[2].matchItem)
-        XCTAssertEqual(responses[2].matchItem?.searchKeyword, "c^i tio")
+        XCTAssertEqual(responses[2].matchItems.count, 1)
+        XCTAssertEqual(responses[2].matchItems[0].searchKeyword, "c^i tio")
+        
+        // ** japanese 1word match
+        responses = linad.search(searchKey: "恋愛関係")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "ja")
+        XCTAssertEqual(responses[0].matchedKeyword, "恋愛関係")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+
+        // ** japanese 1word not match
+        responses = linad.search(searchKey: "恋仲")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "ja")
+        XCTAssertEqual(responses[0].matchedKeyword, "恋仲")
+        XCTAssertEqual(responses[0].matchItems.count, 0)
     }
     
     func testTokenize(){

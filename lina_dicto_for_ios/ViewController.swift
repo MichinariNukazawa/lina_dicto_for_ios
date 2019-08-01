@@ -47,7 +47,7 @@ func generateGoogleTranslateUrl(keyword :String, src_lang :String, dst_lang :Str
         + "/#" + src_lang
         + "/" + dst_lang
         + "/" + encodingUrlEncode(string: keyword)
-    return link;
+    return link
 }
 
 
@@ -71,8 +71,8 @@ extension String {
 // esperantoワードか（含む文字かチェック）
 func isEsperanto(word :String) -> Bool {
     // 厳密なマッチではないけれど、日本語と区別できればOK
-    let pattern = "^[A-Za-z0-9 \\s^~\u{0108}-\u{016D}]+$"
-    return word.pregMatche(pattern: pattern);
+    let pattern = "^[A-Za-z0-9\u{0108}-\u{016D}\\s^~.\\!\\?-]+$"
+    return word.pregMatche(pattern: pattern)
 }
 
 func convertCaretFromAnySistemo(str :String) -> String{
@@ -93,7 +93,7 @@ func convertCaretFromAnySistemo(str :String) -> String{
         ["\u{016D}", "u"],
         ["\u{016C}", "U"],
         ["\u{016D}", "u"],
-    ];
+    ]
     
     for r in replaces{
         // ** x-sistemo
@@ -108,7 +108,7 @@ func convertCaretFromAnySistemo(str :String) -> String{
         // ** alfabeto
         res = res.replacingOccurrences(of: r[0], with: r[1] + "^")
     }
-    return res;
+    return res
 }
 
 func convertAlfabetoFromCaretSistemo(str :String) -> String{
@@ -127,14 +127,14 @@ func convertAlfabetoFromCaretSistemo(str :String) -> String{
         ["\u{016D}", "u^"],
         ["\u{016C}", "U~"],
         ["\u{016D}", "u~"],
-    ];
+    ]
     
     var dst = str
     for r in replaces{
         dst = dst.replacingOccurrences(of: r[1], with: r[0])
     }
 
-    return dst;
+    return dst
 }
 
 func convertAlfabetoFromAnySistemo(str :String) -> String{
@@ -211,12 +211,14 @@ struct DictItem{
 }
 
 struct SearchResponseItem{
+    var lang: String                // "eo", "ja"
     var matchedKeyword: String
-    var matchItem: DictItem?
+    var matchItems: [DictItem]
 }
 class LDictionary{
     private var dictItems = [String : DictItem]()
-    
+    private var jaDictItems = [String : [DictItem]]()
+
     func initialize(){
         // ファイルまでのパスを取得（同時にnilチェック）
         if let path: String = Bundle.main.path(forResource: "dictionary00", ofType: "json") {
@@ -250,11 +252,62 @@ class LDictionary{
             print("指定されたファイルが見つかりません")
         }
         
+        initializeJaDict()
+    }
+    
+    func initializeJaDict(){
+        for (_, item) in dictItems{
+            let meanWords = item.explanation.split(separator: ";")
+            for meanWord_ in meanWords{
+                var meanWord :String = String(meanWord_)
+                meanWord = meanWord.replacingOccurrences(of: "{.+}", with: "", options: .regularExpression)        // 公認語根情報
+                meanWord = meanWord.replacingOccurrences(of: "［.+］", with: "", options: .regularExpression)        // 文法情報(品詞情報)
+                meanWord = meanWord.replacingOccurrences(of: "【.+】", with: "", options: .regularExpression)        // 専門用語の略号
+                meanWord = meanWord.replacingOccurrences(of: "《.+》", with: "", options: .regularExpression)        // その他略記号
+                
+                // 後方を除去
+                meanWord = meanWord.replacingOccurrences(of: "=.+$", with: "", options: .regularExpression)        // 同義語's
+                meanWord = meanWord.replacingOccurrences(of: ">>.+$", with: "", options: .regularExpression)        // 関連語・類義語
+                meanWord = meanWord.replacingOccurrences(of: "><.+$", with: "", options: .regularExpression)        // 反対語・対義語
+                
+                // 中を除去
+                meanWord = meanWord.replacingOccurrences(of: "（[属科種]）", with: "", options: .regularExpression)        // 動植物名分類(属科種)
+                
+                let jaKeywords = meanWord.split(separator: ",")
+                for jakeyword_ in jaKeywords{
+                    var jaKeyword :String = String(jakeyword_)
+                   // 先頭の括弧を除去
+                    jaKeyword = jaKeyword.replacingOccurrences(of: "（.+?）", with: "", options: .regularExpression)
+                    var array :[DictItem] = jaDictItems[jaKeyword] ?? []
+                    array.append(item)
+                    jaDictItems[jaKeyword] = array
+                }
+            }
+        }
     }
     
     func searchEKeywordFullMatch(eKeyword :String) -> DictItem?{
         let casedSearchKey = eKeyword.lowercased()
         return dictItems[casedSearchKey]
+    }
+
+    func searchJaKeywordFullMatch(jKeyword :String) -> [DictItem]{
+        return jaDictItems[jKeyword] ?? []
+    }
+
+    func searchResponseFromKeywordFullMatch(keyword: String) -> SearchResponseItem{
+        if(isEsperanto(word: keyword)){
+            let match = searchEKeywordFullMatch(eKeyword: keyword)
+            if(match != nil){
+                let matchItems = [match!] // 型ごまかし
+                return SearchResponseItem(lang: "eo", matchedKeyword: keyword, matchItems: matchItems)
+            }else{
+                return SearchResponseItem(lang: "eo", matchedKeyword: keyword, matchItems: [])
+            }
+        }else{
+            let matchItems = searchJaKeywordFullMatch(jKeyword: keyword)
+            return SearchResponseItem(lang: "ja", matchedKeyword: keyword, matchItems: matchItems)
+        }
     }
 
     func search(searchKey: String) -> [SearchResponseItem]{
@@ -271,42 +324,51 @@ class LDictionary{
         
         // ** word全体とマッチ
         do{
-            let fullSearchKey = searchWords.joined(separator: " ")
-            let match = searchEKeywordFullMatch(eKeyword: fullSearchKey);
-            if(match != nil){
-                result.append(SearchResponseItem(matchedKeyword: fullSearchKey, matchItem: match))
-                return result;
+            var fullSearchKey :String
+            if(isEsperanto(word: searchWords[0])){
+                fullSearchKey = searchWords.joined(separator: " ")
+            }else{
+                fullSearchKey = searchKey.replacingOccurrences(of: "//s", with: "", options: .regularExpression)
+            }
+            let response = searchResponseFromKeywordFullMatch(keyword: fullSearchKey)
+            if(response.matchItems.count != 0){
+                result.append(response)
+                return result
             }
         }
 
         // 先頭から2wordずつマッチ
-        var iSearchWord = 0;
+        var iSearchWord = 0
         while(iSearchWord < searchWords.count){
             // 2wordマッチ
             if(2 <= (searchWords.count - iSearchWord)){
                 let joinedSearchKey :String = searchWords[iSearchWord] + " " + searchWords[iSearchWord + 1]
-                let match = searchEKeywordFullMatch(eKeyword: joinedSearchKey);
-                if(match != nil){
-                    let resultItem = SearchResponseItem(matchedKeyword: joinedSearchKey, matchItem: match)
-                    result.append(resultItem)
-                    iSearchWord += 2;
-                    continue;
+
+                let response = searchResponseFromKeywordFullMatch(keyword: joinedSearchKey)
+                if(response.matchItems.count != 0){
+                    result.append(response)
+                    iSearchWord += 2
+                    continue
                 }
             }
             //　1word検索
             do{
-                let keyStr :String = String(searchWords[iSearchWord]);
-                let match = searchEKeywordFullMatch(eKeyword: keyStr);
-                if(match != nil){
-                    let resultItem = SearchResponseItem(matchedKeyword: keyStr, matchItem: match)
-                    result.append(resultItem)
-                    iSearchWord += 1;
+                let keyStr :String = String(searchWords[iSearchWord])
+                let response = searchResponseFromKeywordFullMatch(keyword: keyStr)
+                if(response.matchItems.count != 0){
+                    result.append(response)
+                    iSearchWord += 1
                     continue
                 }
             }
-            // マッチしなかった
-            result.append(SearchResponseItem(matchedKeyword: String(searchWords[iSearchWord]), matchItem: nil))
-            iSearchWord += 1
+            do{
+                // マッチしなかった
+                let searchKey1 :String = String(searchWords[iSearchWord])
+                let lang = isEsperanto(word: searchKey1) ? "eo":"ja"
+                result.append(SearchResponseItem(lang: lang, matchedKeyword: searchKey1, matchItems: []))
+                iSearchWord += 1
+
+            }
         }
         
         //print(searchWords, match)
@@ -360,19 +422,19 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 + "!legumin / legumin.txtを表示\n"
             textView.text = sHelp
             textView.scrollRangeToVisible(NSMakeRange(1, 1))
-            return true;
+            return true
         }
         if("!gvidilo" == str){
             textView.text = "# gvidilo.txt\n"
             textView.text += readText(filename: "gvidilo", ext: "txt")
             textView.scrollRangeToVisible(NSMakeRange(1, 1))
-            return true;
+            return true
         }
         if("!legumin" == str){
             textView.text = "# legumin.txt\n"
             textView.text += readText(filename: "legumin", ext: "txt")
             textView.scrollRangeToVisible(NSMakeRange(1, 1))
-            return true;
+            return true
         }
         
         return false
@@ -388,7 +450,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         let searchResponseItems = dict.search(searchKey: searchKey)
         if(searchResponseItems.count == 0){
             // NOP
-            return;
+            return
         }
 
         // コマンド処理
@@ -409,15 +471,27 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         }
         let sResponseStyle = "style='font-size: 22px'"
         for response in searchResponseItems{
-            let match = response.matchItem
-            if(match != nil){
-                let matchedKeyword :String = response.matchedKeyword
-                let explanation :String = response.matchItem?.explanation ?? ""
-                
-                let t = "<div " + sResponseStyle + ">"
-                    + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
-                    + "</div>"
-                html += t
+            if(response.matchItems.count != 0){
+                if(response.lang == "eo"){
+                    let matchedKeyword :String = response.matchedKeyword
+                    let explanation :String = response.matchItems[0].explanation
+                    
+                    let t = "<div " + sResponseStyle + ">"
+                        + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
+                        + "</div>"
+                    html += t
+                }else{
+                    let matchedKeyword :String = response.matchedKeyword
+                    var eoWords :[String] = []
+                    for item in response.matchItems{
+                        eoWords.append(convertAlfabetoFromAnySistemo(str: item.rawKeyword))
+                    }
+                    
+                    let t = "<div " + sResponseStyle + ">"
+                        + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + eoWords.joined(separator: ", ")
+                        + "</div>"
+                    html += t
+                }
             }else{
                 let matchedKeyword = response.matchedKeyword
                 var src_lang = "eo"
