@@ -277,7 +277,12 @@ class LDictionary{
                 for jakeyword_ in jaKeywords{
                     var jaKeyword :String = String(jakeyword_)
                    // 先頭の括弧を除去
-                    jaKeyword = jaKeyword.replacingOccurrences(of: "（.+?）", with: "", options: .regularExpression)
+                    jaKeyword = jaKeyword
+                        .replacingOccurrences(of: "（.+?）", with: "", options: .regularExpression)
+                    jaKeyword = sanitizeSearchKeywordJa(jaKeyword: jaKeyword)
+                    if(jaKeyword.count == 0){
+                        continue;
+                    }
                     var array :[DictItem] = jaDictItems[jaKeyword] ?? []
                     array.append(item)
                     jaDictItems[jaKeyword] = array
@@ -286,13 +291,19 @@ class LDictionary{
         }
     }
     
+    func sanitizeSearchKeywordJa(jaKeyword :String) -> String{
+        return jaKeyword
+            .replacingOccurrences(of: "[？！。、]", with: "", options: .regularExpression)
+            .replacingOccurrences(of: "//s", with: "", options: .regularExpression)
+    }
+    
     func searchEKeywordFullMatch(eKeyword :String) -> DictItem?{
         let casedSearchKey = eKeyword.lowercased()
         return dictItems[casedSearchKey]
     }
 
-    func searchJaKeywordFullMatch(jKeyword :String) -> [DictItem]{
-        return jaDictItems[jKeyword] ?? []
+    func searchJaKeywordFullMatch(jaKeyword :String) -> [DictItem]{
+        return jaDictItems[sanitizeSearchKeywordJa(jaKeyword: jaKeyword)] ?? []
     }
 
     func searchResponseFromKeywordFullMatch(keyword: String) -> SearchResponseItem{
@@ -305,7 +316,7 @@ class LDictionary{
                 return SearchResponseItem(lang: "eo", matchedKeyword: keyword, matchItems: [])
             }
         }else{
-            let matchItems = searchJaKeywordFullMatch(jKeyword: keyword)
+            let matchItems = searchJaKeywordFullMatch(jaKeyword: keyword)
             return SearchResponseItem(lang: "ja", matchedKeyword: keyword, matchItems: matchItems)
         }
     }

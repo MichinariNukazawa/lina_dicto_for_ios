@@ -164,6 +164,21 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].lang, "ja")
         XCTAssertEqual(responses[0].matchedKeyword, "恋愛関係")
         XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "amrilato")
+
+        // ignoring double-word symbol character ex."？"
+        responses = linad.search(searchKey: "おはよう")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "ja")
+        XCTAssertEqual(responses[0].matchedKeyword, "おはよう")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "bonan matenon")
+        responses = linad.search(searchKey: "おはよう！")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "ja")
+        XCTAssertEqual(responses[0].matchedKeyword, "おはよう！")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "bonan matenon")
 
         // ** japanese 1word not match
         responses = linad.search(searchKey: "恋仲")
