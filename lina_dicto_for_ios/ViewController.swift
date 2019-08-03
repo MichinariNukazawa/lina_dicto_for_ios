@@ -204,6 +204,16 @@ struct DictItemOfCodable : Codable{
     let value: String
 }
 
+struct JaDictItemOfCodable : Codable{
+    let key: String
+    let values: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case key = "k"
+        case values = "v"
+    }
+}
+
 struct DictItem{
     let searchKeyword: String
     let rawKeyword: String
@@ -217,9 +227,14 @@ struct SearchResponseItem{
 }
 class LDictionary{
     private var dictItems = [String : DictItem]()
-    private var jaDictItems = [String : [DictItem]]()
+    private var jaDictItems = [String : [String]]()
 
     func initialize(){
+        initializeEoDict()
+        initializeJaDict()
+    }
+
+    func initializeEoDict(){
         // ファイルまでのパスを取得（同時にnilチェック）
         if let path: String = Bundle.main.path(forResource: "dictionary00", ofType: "json") {
             do {
@@ -230,12 +245,9 @@ class LDictionary{
                 do {
                     let dictItemOfCodable: [DictItemOfCodable] = try decoder.decode([DictItemOfCodable].self, from: jsonData.data(using: .utf8)!)
                     //print(dictItems)
-
+                    
                     for i in dictItemOfCodable{
-                        let searchKeyword = i.key
-                            .lowercased()
-                            .removeCharacters(from: "/")
-                            .replacingOccurrences(of: "[,//._//?!-]+", with: "", options: .regularExpression)
+                        let searchKeyword = sanitizeSearchKeywordEo(eoKeyword: i.key)
                         let dictItem : DictItem = DictItem(searchKeyword: searchKeyword, rawKeyword: i.key, explanation: i.value)
                         dictItems[searchKeyword] = dictItem
                     }
@@ -251,11 +263,44 @@ class LDictionary{
         }else {
             print("指定されたファイルが見つかりません")
         }
-        
-        initializeJaDict()
     }
     
     func initializeJaDict(){
+        // ファイルまでのパスを取得（同時にnilチェック）
+        if let path: String = Bundle.main.path(forResource: "JaDictionary00", ofType: "json") {
+            do {
+                // ファイルの内容を取得する
+                let jsonData = try String(contentsOfFile: path)
+                
+                let decoder: JSONDecoder = JSONDecoder()
+                do {
+                    let dictItemOfCodable: [JaDictItemOfCodable] = try decoder.decode([JaDictItemOfCodable].self, from: jsonData.data(using: .utf8)!)
+                    //print(dictItems)
+                    
+                    for i in dictItemOfCodable{
+                        jaDictItems[i.key] = i.values
+                    }
+                } catch {
+                    print("error:", error.localizedDescription)
+                }
+                
+            } catch  {
+                print("ファイルの内容取得時に失敗")
+            }
+            
+            
+        }else {
+            print("指定されたファイルが見つかりません")
+        }
+        
+        print("loading JaDictionary end: ", jaDictItems.count)
+    }
+    
+    
+
+    /*
+    func initializeJaDict(){
+        log(debug: "initialize dict ja: start")
         for (_, item) in dictItems{
             let meanWords = item.explanation.split(separator: ";")
             for meanWord_ in meanWords{
@@ -289,6 +334,16 @@ class LDictionary{
                 }
             }
         }
+        log(debug: "initialize dict ja: end")
+    }
+     */
+    
+    func sanitizeSearchKeywordEo(eoKeyword :String) -> String{
+        return eoKeyword
+            .lowercased()
+            .removeCharacters(from: "/")
+            .replacingOccurrences(of: "[,//._//?!-]+", with: "", options: .regularExpression)
+
     }
     
     func sanitizeSearchKeywordJa(jaKeyword :String) -> String{
@@ -297,18 +352,27 @@ class LDictionary{
             .replacingOccurrences(of: "//s", with: "", options: .regularExpression)
     }
     
-    func searchEKeywordFullMatch(eKeyword :String) -> DictItem?{
-        let casedSearchKey = eKeyword.lowercased()
-        return dictItems[casedSearchKey]
+    func searchEKeywordFullMatch(eoKeyword :String) -> DictItem?{
+        let eoKeyword_ = sanitizeSearchKeywordEo(eoKeyword: eoKeyword)
+        return dictItems[eoKeyword_]
     }
 
     func searchJaKeywordFullMatch(jaKeyword :String) -> [DictItem]{
-        return jaDictItems[sanitizeSearchKeywordJa(jaKeyword: jaKeyword)] ?? []
+        var dictItems :[DictItem] = []
+        let jaKeyword_ = sanitizeSearchKeywordJa(jaKeyword: jaKeyword)
+        let jaKeywords = jaDictItems[jaKeyword_] ?? []
+        for jaKeyword in jaKeywords{
+            let item = searchEKeywordFullMatch(eoKeyword: jaKeyword.replacingOccurrences(of: "/", with: "", options: .regularExpression))
+            if(item != nil){
+                dictItems.append(item!)
+            }
+        }
+        return dictItems
     }
 
     func searchResponseFromKeywordFullMatch(keyword: String) -> SearchResponseItem{
         if(isEsperanto(word: keyword)){
-            let match = searchEKeywordFullMatch(eKeyword: keyword)
+            let match = searchEKeywordFullMatch(eoKeyword: keyword)
             if(match != nil){
                 let matchItems = [match!] // 型ごまかし
                 return SearchResponseItem(lang: "eo", matchedKeyword: keyword, matchItems: matchItems)
@@ -407,6 +471,8 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         searchBar.delegate = self
 
         dict.initialize()
+        
+        log()
     }
     
     func readText(filename: String, ext: String) -> String{
