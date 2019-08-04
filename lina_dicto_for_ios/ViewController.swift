@@ -202,6 +202,11 @@ struct Tokenizer {
 struct DictItemOfCodable : Codable{
     let key: String
     let value: String
+    
+    enum CodingKeys: String, CodingKey {
+        case key = "k"
+        case value = "v"
+    }
 }
 
 struct JaDictItemOfCodable : Codable{
@@ -295,49 +300,7 @@ class LDictionary{
         
         print("loading JaDictionary end: ", jaDictItems.count)
     }
-    
-    
 
-    /*
-    func initializeJaDict(){
-        log(debug: "initialize dict ja: start")
-        for (_, item) in dictItems{
-            let meanWords = item.explanation.split(separator: ";")
-            for meanWord_ in meanWords{
-                var meanWord :String = String(meanWord_)
-                meanWord = meanWord.replacingOccurrences(of: "{.+}", with: "", options: .regularExpression)        // 公認語根情報
-                meanWord = meanWord.replacingOccurrences(of: "［.+］", with: "", options: .regularExpression)        // 文法情報(品詞情報)
-                meanWord = meanWord.replacingOccurrences(of: "【.+】", with: "", options: .regularExpression)        // 専門用語の略号
-                meanWord = meanWord.replacingOccurrences(of: "《.+》", with: "", options: .regularExpression)        // その他略記号
-                
-                // 後方を除去
-                meanWord = meanWord.replacingOccurrences(of: "=.+$", with: "", options: .regularExpression)        // 同義語's
-                meanWord = meanWord.replacingOccurrences(of: ">>.+$", with: "", options: .regularExpression)        // 関連語・類義語
-                meanWord = meanWord.replacingOccurrences(of: "><.+$", with: "", options: .regularExpression)        // 反対語・対義語
-                
-                // 中を除去
-                meanWord = meanWord.replacingOccurrences(of: "（[属科種]）", with: "", options: .regularExpression)        // 動植物名分類(属科種)
-                
-                let jaKeywords = meanWord.split(separator: ",")
-                for jakeyword_ in jaKeywords{
-                    var jaKeyword :String = String(jakeyword_)
-                   // 先頭の括弧を除去
-                    jaKeyword = jaKeyword
-                        .replacingOccurrences(of: "（.+?）", with: "", options: .regularExpression)
-                    jaKeyword = sanitizeSearchKeywordJa(jaKeyword: jaKeyword)
-                    if(jaKeyword.count == 0){
-                        continue;
-                    }
-                    var array :[DictItem] = jaDictItems[jaKeyword] ?? []
-                    array.append(item)
-                    jaDictItems[jaKeyword] = array
-                }
-            }
-        }
-        log(debug: "initialize dict ja: end")
-    }
-     */
-    
     func sanitizeSearchKeywordEo(eoKeyword :String) -> String{
         return eoKeyword
             .lowercased()
