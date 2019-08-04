@@ -194,7 +194,52 @@ struct Tokenizer {
         return ss2
     }
 }
-    
+
+// ------------
+//
+// ------------
+
+class Esperanto{
+
+    static let finajxoj :[String] = [
+        "i",
+        "as",
+        "is",
+        "os",
+        "us",
+        "u"
+    ];
+
+    //! 語根を返す
+    static func convertRadico(str: String) -> String{
+        var radico = str
+
+        radico = radico.replacingOccurrences(of: "j$", with: "", options: .regularExpression)
+
+        for finajxo in finajxoj{
+            radico = radico.replacingOccurrences(of: "\(finajxo)$", with: "", options: .regularExpression)
+        }
+        
+        return radico
+    }
+
+    //! 動詞語尾変換候補一覧があれば返す
+    static func generateVerboCandidate(str: String) -> [String]{
+        let radico = convertRadico(str: str)
+
+        if(str == radico){
+            return []
+        }
+
+        var candidate :[String] = []
+        for finajxo in finajxoj{
+            candidate.append(radico + finajxo)
+        }
+
+        return candidate
+    }
+}
+
 // ------------
 //
 // ------------
@@ -228,8 +273,10 @@ struct DictItem{
 struct SearchResponseItem{
     var lang: String                // "eo", "ja"
     var matchedKeyword: String
+    var modifyKind: String
     var matchItems: [DictItem]
 }
+
 class LDictionary{
     private var dictItems = [String : DictItem]()
     private var jaDictItems = [String : [String]]()
@@ -338,13 +385,29 @@ class LDictionary{
             let match = searchEKeywordFullMatch(eoKeyword: keyword)
             if(match != nil){
                 let matchItems = [match!] // 型ごまかし
-                return SearchResponseItem(lang: "eo", matchedKeyword: keyword, matchItems: matchItems)
+                return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "", matchItems: matchItems)
             }else{
-                return SearchResponseItem(lang: "eo", matchedKeyword: keyword, matchItems: [])
+                return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "", matchItems: [])
             }
         }else{
             let matchItems = searchJaKeywordFullMatch(jaKeyword: keyword)
-            return SearchResponseItem(lang: "ja", matchedKeyword: keyword, matchItems: matchItems)
+            return SearchResponseItem(lang: "ja", matchedKeyword: keyword, modifyKind: "", matchItems: matchItems)
+        }
+    }
+
+    func searchResponseFromKeywordNearMatch(keyword: String) -> SearchResponseItem{
+        if(isEsperanto(word: keyword)){
+            for keyword_ in Esperanto.generateVerboCandidate(str: keyword){
+                let match = searchEKeywordFullMatch(eoKeyword: keyword_)
+                if(match != nil){
+                    let matchItems = [match!] // 型ごまかし
+                    return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "verbo candidates", matchItems: matchItems)
+                }
+            }
+
+            return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "", matchItems: [])
+        }else{
+            return SearchResponseItem(lang: "ja", matchedKeyword: keyword, modifyKind: "", matchItems: [])
         }
     }
 
@@ -378,7 +441,7 @@ class LDictionary{
         // 先頭から2wordずつマッチ
         var iSearchWord = 0
         while(iSearchWord < searchWords.count){
-            // 2wordマッチ
+            // 2word 一致検索
             if(2 <= (searchWords.count - iSearchWord)){
                 let joinedSearchKey :String = searchWords[iSearchWord] + " " + searchWords[iSearchWord + 1]
 
@@ -389,7 +452,7 @@ class LDictionary{
                     continue
                 }
             }
-            //　1word検索
+            //　1word 一致検索
             do{
                 let keyStr :String = String(searchWords[iSearchWord])
                 let response = searchResponseFromKeywordFullMatch(keyword: keyStr)
@@ -399,11 +462,23 @@ class LDictionary{
                     continue
                 }
             }
+            
+            // １1word 候補推定
             do{
-                // マッチしなかった
+                let keyStr :String = String(searchWords[iSearchWord])
+                let response = searchResponseFromKeywordNearMatch(keyword: keyStr)
+                if(response.matchItems.count != 0){
+                    result.append(response)
+                    iSearchWord += 1
+                    continue
+                }
+            }
+
+            // マッチしなかった
+            do{
                 let searchKey1 :String = String(searchWords[iSearchWord])
                 let lang = isEsperanto(word: searchKey1) ? "eo":"ja"
-                result.append(SearchResponseItem(lang: lang, matchedKeyword: searchKey1, matchItems: []))
+                result.append(SearchResponseItem(lang: lang, matchedKeyword: searchKey1, modifyKind: "", matchItems: []))
                 iSearchWord += 1
 
             }
@@ -515,11 +590,22 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 if(response.lang == "eo"){
                     let matchedKeyword :String = response.matchedKeyword
                     let explanation :String = response.matchItems[0].explanation
-                    
-                    let t = "<div " + sResponseStyle + ">"
-                        + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
-                        + "</div>"
-                    html += t
+
+                    if("" == response.modifyKind){
+                        let t = "<div " + sResponseStyle + ">"
+                            + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
+                            + "</div>"
+                        html += t
+                    }else{
+                        let sModifyStule = "style='font-size: 14px'"
+                        let t = "<div " + sResponseStyle + ">"
+                            + "<span " + sModifyStule + ">"
+                            + convertAlfabetoFromAnySistemo(str: matchedKeyword)
+                            + " → " + "</span>" + response.matchItems[0].rawKeyword
+                            + " : " + explanation
+                            + "</div>"
+                        html += t
+                    }
                 }else{
                     let matchedKeyword :String = response.matchedKeyword
                     var eoWords :[String] = []

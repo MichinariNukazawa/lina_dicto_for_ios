@@ -77,6 +77,7 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses.count, 1)
         XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Bona")
+        XCTAssertEqual(responses[0].modifyKind, "")
         XCTAssertEqual(responses[0].matchItems.count, 1)
         
         // 1word単語マッチ lowercase
@@ -142,16 +143,26 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchItems.count, 1)
         
+        // ** 1 word near match
+        responses = linad.search(searchKey: "estas")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "estas")
+        XCTAssertEqual(responses[0].modifyKind, "verbo candidates")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+
         // ** multi word multi str match
         responses = linad.search(searchKey: "Kio estas cxi tio.")
         XCTAssertEqual(responses.count, 3)
         XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Kio")
+        XCTAssertEqual(responses[0].modifyKind, "")
         XCTAssertEqual(responses[0].matchItems.count, 1)
         XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "kio")
         XCTAssertEqual(responses[1].lang, "eo")
         XCTAssertEqual(responses[1].matchedKeyword, "estas")
-        XCTAssertEqual(responses[1].matchItems.count, 0)
+        XCTAssertEqual(responses[1].modifyKind, "verbo candidates")
+        XCTAssertEqual(responses[1].matchItems.count, 1)
         //XCTAssertEqual(responses[1].matchItem?.searchKeyword, "estas")
         XCTAssertEqual(responses[2].lang, "eo")
         XCTAssertEqual(responses[2].matchedKeyword, "c^i tio")
