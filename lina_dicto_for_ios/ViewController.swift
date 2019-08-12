@@ -23,7 +23,6 @@ func log(debug: Any = "",
 //
 // ------------
 
-
 extension String {
     func removeCharacters(from forbiddenChars: CharacterSet) -> String {
         let passed = self.unicodeScalars.filter { !forbiddenChars.contains($0) }
@@ -50,101 +49,10 @@ func generateGoogleTranslateUrl(keyword :String, src_lang :String, dst_lang :Str
     return link
 }
 
-
-extension String {
-    //絵文字など(2文字分)も含めた文字数を返します
-    var length: Int {
-        let string_NS = self as NSString
-        return string_NS.length
-    }
-    
-    //正規表現の検索をします
-    func pregMatche(pattern: String, options: NSRegularExpression.Options = []) -> Bool {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
-            return false
-        }
-        let matches = regex.matches(in: self, options: [], range: NSMakeRange(0, self.length))
-        return matches.count > 0
-    }
-}
-
-// esperantoワードか（含む文字かチェック）
-func isEsperanto(word :String) -> Bool {
-    // 厳密なマッチではないけれど、日本語と区別できればOK
-    let pattern = "^[A-Za-z0-9\u{0108}-\u{016D}\\s^~.\\!\\?-]+$"
-    return word.pregMatche(pattern: pattern)
-}
-
-func convertCaretFromAnySistemo(str :String) -> String{
-    var res = str
-
-    let replaces = [
-        ["\u{0108}", "C"],
-        ["\u{0109}", "c"],
-        ["\u{011C}", "G"],
-        ["\u{011D}", "g"],
-        ["\u{0124}", "H"],
-        ["\u{0125}", "h"],
-        ["\u{0134}", "J"],
-        ["\u{0135}", "j"],
-        ["\u{015C}", "S"],
-        ["\u{015D}", "s"],
-        ["\u{016C}", "U"],
-        ["\u{016D}", "u"],
-        ["\u{016C}", "U"],
-        ["\u{016D}", "u"],
-    ]
-    
-    for r in replaces{
-        // ** x-sistemo
-        res = res.replacingOccurrences(of: r[1] + "xx", with: r[1] + "^")
-        // ** x-sistemo
-        res = res.replacingOccurrences(of: r[1] + "x" , with: r[1] + "^")
-        // ** caret-sistemo
-        // res = res.replacingOccurrences(of: r[1] + "^", with: r[1] + "^")
-        // ** caret-sistemo ("~" -> "^")
-        res = res.replacingOccurrences(of: "U~", with: "U^")
-        res = res.replacingOccurrences(of: "u~", with: "u^")
-        // ** alfabeto
-        res = res.replacingOccurrences(of: r[0], with: r[1] + "^")
-    }
-    return res
-}
-
-func convertAlfabetoFromCaretSistemo(str :String) -> String{
-    let replaces = [
-        ["\u{0108}", "C^"],
-        ["\u{0109}", "c^"],
-        ["\u{011C}", "G^"],
-        ["\u{011D}", "g^"],
-        ["\u{0124}", "H^"],
-        ["\u{0125}", "h^"],
-        ["\u{0134}", "J^"],
-        ["\u{0135}", "j^"],
-        ["\u{015C}", "S^"],
-        ["\u{015D}", "s^"],
-        ["\u{016C}", "U^"],
-        ["\u{016D}", "u^"],
-        ["\u{016C}", "U~"],
-        ["\u{016D}", "u~"],
-    ]
-    
-    var dst = str
-    for r in replaces{
-        dst = dst.replacingOccurrences(of: r[1], with: r[0])
-    }
-
-    return dst
-}
-
-func convertAlfabetoFromAnySistemo(str :String) -> String{
-    return convertAlfabetoFromCaretSistemo(str: convertCaretFromAnySistemo(str: str))
-}
-
-
 // ------------
 //
 // ------------
+
 struct Tokenizer {
     
     //let patternLowerCase =
@@ -185,58 +93,13 @@ struct Tokenizer {
         let ss1 = preTokenizeEsperanto(text: text)
         var ss2 : [String] = []
         for s in ss1{
-            if(isEsperanto(word: s)){
+            if(Esperanto.isEsperanto(word: s)){
                 ss2.append(s)
             }else{
                 ss2 += preTokenizeJapanese(text: s)
             }
         }
         return ss2
-    }
-}
-
-// ------------
-//
-// ------------
-
-class Esperanto{
-
-    static let finajxoj :[String] = [
-        "i",
-        "as",
-        "is",
-        "os",
-        "us",
-        "u"
-    ];
-
-    //! 語根を返す
-    static func convertRadico(str: String) -> String{
-        var radico = str
-
-        radico = radico.replacingOccurrences(of: "j$", with: "", options: .regularExpression)
-
-        for finajxo in finajxoj{
-            radico = radico.replacingOccurrences(of: "\(finajxo)$", with: "", options: .regularExpression)
-        }
-        
-        return radico
-    }
-
-    //! 動詞語尾変換候補一覧があれば返す
-    static func generateVerboCandidate(str: String) -> [String]{
-        let radico = convertRadico(str: str)
-
-        if(str == radico){
-            return []
-        }
-
-        var candidate :[String] = []
-        for finajxo in finajxoj{
-            candidate.append(radico + finajxo)
-        }
-
-        return candidate
     }
 }
 
@@ -381,7 +244,7 @@ class LDictionary{
     }
 
     func searchResponseFromKeywordFullMatch(keyword: String) -> SearchResponseItem{
-        if(isEsperanto(word: keyword)){
+        if(Esperanto.isEsperanto(word: keyword)){
             let match = searchEKeywordFullMatch(eoKeyword: keyword)
             if(match != nil){
                 let matchItems = [match!] // 型ごまかし
@@ -396,7 +259,7 @@ class LDictionary{
     }
 
     func searchResponseFromKeywordNearMatch(keyword: String) -> SearchResponseItem{
-        if(isEsperanto(word: keyword)){
+        if(Esperanto.isEsperanto(word: keyword)){
             for keyword_ in Esperanto.generateVerboCandidate(str: keyword){
                 let match = searchEKeywordFullMatch(eoKeyword: keyword_)
                 if(match != nil){
@@ -413,7 +276,7 @@ class LDictionary{
 
     func search(searchKey: String) -> [SearchResponseItem]{
         // ** searchKeyをクリンアップし分割
-        let searchKey_ = convertCaretFromAnySistemo(str: searchKey)
+        let searchKey_ = Esperanto.convertCaretFromAnySistemo(str: searchKey)
         let searchWords = Tokenizer.tokenize(text: searchKey_)
         
         var result = [SearchResponseItem]()
@@ -426,7 +289,7 @@ class LDictionary{
         // ** word全体とマッチ
         do{
             var fullSearchKey :String
-            if(isEsperanto(word: searchWords[0])){
+            if(Esperanto.isEsperanto(word: searchWords[0])){
                 fullSearchKey = searchWords.joined(separator: " ")
             }else{
                 fullSearchKey = searchKey.replacingOccurrences(of: "//s", with: "", options: .regularExpression)
@@ -477,7 +340,7 @@ class LDictionary{
             // マッチしなかった
             do{
                 let searchKey1 :String = String(searchWords[iSearchWord])
-                let lang = isEsperanto(word: searchKey1) ? "eo":"ja"
+                let lang = Esperanto.isEsperanto(word: searchKey1) ? "eo":"ja"
                 result.append(SearchResponseItem(lang: lang, matchedKeyword: searchKey1, modifyKind: "", matchItems: []))
                 iSearchWord += 1
 
@@ -578,7 +441,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         do{
             let sSearchStyle = "style='font-size: 14px; background-color:rgba(128,256,128,0.6); width:100%'"
             let showSearchKey = searchKey.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
-            //showSearchKey = convertAlfabetoFromAnySistemo(str: showSearchKey)
+            //showSearchKey = Esperanto.convertAlfabetoFromAnySistemo(str: showSearchKey)
             let t = "<div " + sSearchStyle + ">"
                 + "＞" + showSearchKey + ""
                 + "</div>"
@@ -593,14 +456,14 @@ class ViewController: UIViewController,  UISearchBarDelegate{
 
                     if("" == response.modifyKind){
                         let t = "<div " + sResponseStyle + ">"
-                            + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
+                            + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + explanation
                             + "</div>"
                         html += t
                     }else{
                         let sModifyStule = "style='font-size: 14px'"
                         let t = "<div " + sResponseStyle + ">"
                             + "<span " + sModifyStule + ">"
-                            + convertAlfabetoFromAnySistemo(str: matchedKeyword)
+                            + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
                             + " → " + "</span>" + response.matchItems[0].rawKeyword
                             + " : " + explanation
                             + "</div>"
@@ -610,11 +473,11 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                     let matchedKeyword :String = response.matchedKeyword
                     var eoWords :[String] = []
                     for item in response.matchItems{
-                        eoWords.append(convertAlfabetoFromAnySistemo(str: item.rawKeyword))
+                        eoWords.append(Esperanto.convertAlfabetoFromAnySistemo(str: item.rawKeyword))
                     }
                     
                     let t = "<div " + sResponseStyle + ">"
-                        + convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + eoWords.joined(separator: ", ")
+                        + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword) + " : " + eoWords.joined(separator: ", ")
                         + "</div>"
                     html += t
                 }
@@ -622,20 +485,20 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 let matchedKeyword = response.matchedKeyword
                 var src_lang = "eo"
                 var dst_lang = "ja"
-                if(!isEsperanto(word: matchedKeyword)){
+                if(!Esperanto.isEsperanto(word: matchedKeyword)){
                     src_lang = "ja"
                     dst_lang = "eo"
                 }
                 let url = generateGoogleTranslateUrl(keyword: matchedKeyword, src_lang: src_lang, dst_lang: dst_lang)
                 html += "<div " + sResponseStyle + ">"
-                    + convertAlfabetoFromAnySistemo(str: matchedKeyword)
+                    + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
                     + " : is not match."
                     + "<br>"
                     
                     + "<span style='font-size: 16px'>"
                     + "  (" + "<a href='" + url + "'>"
                     + "open browser google translate `"
-                    + convertAlfabetoFromAnySistemo(str: matchedKeyword)
+                    + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
                     + "`"
                     + "</a>)<span>"
                     + "</div>"

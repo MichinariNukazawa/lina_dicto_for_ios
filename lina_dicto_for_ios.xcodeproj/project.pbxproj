@@ -11,6 +11,7 @@
 		A724395022EC951A0021A08B /* gvidilo.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394E22EC951A0021A08B /* gvidilo.txt */; };
 		A790225F22EDA571001C2062 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A790225E22EDA571001C2062 /* icon.png */; };
 		A7DD67ED22F5347C006EB65F /* JaDictionary00.json in Resources */ = {isa = PBXBuildFile; fileRef = A7DD67EC22F5347C006EB65F /* JaDictionary00.json */; };
+		A7E30C4B23021DBD00E0C27D /* Esperanto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E30C4A23021DBD00E0C27D /* Esperanto.swift */; };
 		A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */; };
 		A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA86DE22EB307800B4ED26 /* ViewController.swift */; };
 		A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7EA86E022EB307800B4ED26 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		A724394E22EC951A0021A08B /* gvidilo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gvidilo.txt; sourceTree = "<group>"; };
 		A790225E22EDA571001C2062 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A7DD67EC22F5347C006EB65F /* JaDictionary00.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JaDictionary00.json; sourceTree = "<group>"; };
+		A7E30C4A23021DBD00E0C27D /* Esperanto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Esperanto.swift; sourceTree = "<group>"; };
 		A7EA86D922EB307800B4ED26 /* lina_dicto_for_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lina_dicto_for_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7EA86DC22EB307800B4ED26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7EA86DE22EB307800B4ED26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				A7EA86E522EB307A00B4ED26 /* LaunchScreen.storyboard */,
 				A7EA86E822EB307A00B4ED26 /* Info.plist */,
 				A7EA870A22EB359E00B4ED26 /* Dictionary.swift */,
+				A7E30C4A23021DBD00E0C27D /* Esperanto.swift */,
 			);
 			path = lina_dicto_for_ios;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				A7EA86DF22EB307800B4ED26 /* ViewController.swift in Sources */,
 				A7EA86DD22EB307800B4ED26 /* AppDelegate.swift in Sources */,
 				A7EA870B22EB359E00B4ED26 /* Dictionary.swift in Sources */,
+				A7E30C4B23021DBD00E0C27D /* Esperanto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

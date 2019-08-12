@@ -33,38 +33,38 @@ class lina_dicto_for_iosTests: XCTestCase {
     
     func testEsperanto(){
         //** esperanto文字列判定
-        XCTAssertEqual(isEsperanto(word: "Bona"), true)     // 1word
-        XCTAssertEqual(isEsperanto(word: "Cxu"), true)      // x-sistemo
-        XCTAssertEqual(isEsperanto(word: "C^u"), true)      // (caret)^-sistemo
-        XCTAssertEqual(isEsperanto(word: "U~"), true)       // ^-sistemo
-        XCTAssertEqual(isEsperanto(word: "ĉu"), true)       // alfabeto
-        XCTAssertEqual(isEsperanto(word: "Amrilato"), true)
-        XCTAssertEqual(isEsperanto(word: "Bonan matenon"), true)   // 2word
-        XCTAssertEqual(isEsperanto(word: "Amrilato."), true)
-        XCTAssertEqual(isEsperanto(word: "Bonan matenon!"), true)
-        XCTAssertEqual(isEsperanto(word: "Kiso?"), true)
-        //XCTAssertEqual(isEsperanto(word: "Bonan matenon!"), true)   // !
-        //XCTAssertEqual(isEsperanto(word: "Bonan matenon."), true)   // .
-        XCTAssertEqual(isEsperanto(word: "おはよう"), false)       // ja
-        XCTAssertEqual(isEsperanto(word: "恋仲"), false)          // ja
-        XCTAssertEqual(isEsperanto(word: "Cxu恋仲"), false)       // ja joined
-        XCTAssertEqual(isEsperanto(word: "Cxuおはよう"), false)    // ja joined
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Bona"), true)     // 1word
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Cxu"), true)      // x-sistemo
+        XCTAssertEqual(Esperanto.isEsperanto(word: "C^u"), true)      // (caret)^-sistemo
+        XCTAssertEqual(Esperanto.isEsperanto(word: "U~"), true)       // ^-sistemo
+        XCTAssertEqual(Esperanto.isEsperanto(word: "ĉu"), true)       // alfabeto
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Amrilato"), true)
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Bonan matenon"), true)   // 2word
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Amrilato."), true)
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Bonan matenon!"), true)
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Kiso?"), true)
+        //XCTAssertEqual(Esperanto.isEsperanto(word: "Bonan matenon!"), true)   // !
+        //XCTAssertEqual(Esperanto.isEsperanto(word: "Bonan matenon."), true)   // .
+        XCTAssertEqual(Esperanto.isEsperanto(word: "おはよう"), false)       // ja
+        XCTAssertEqual(Esperanto.isEsperanto(word: "恋仲"), false)          // ja
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Cxu恋仲"), false)       // ja joined
+        XCTAssertEqual(Esperanto.isEsperanto(word: "Cxuおはよう"), false)    // ja joined
 
         
-        XCTAssertEqual(convertCaretFromAnySistemo(str: "Ĉu"), "C^u");  // alfabeto
-        XCTAssertEqual(convertCaretFromAnySistemo(str: "ĉu"), "c^u");  // alfabeto
-        XCTAssertEqual(convertCaretFromAnySistemo(str: "Ŭ"), "U^");    // alfabeto
-        XCTAssertEqual(convertCaretFromAnySistemo(str: "Cxu"), "C^u"); // x-systemo
-        XCTAssertEqual(convertCaretFromAnySistemo(str: "Cxxu"), "C^u"); // x-systemo
-        XCTAssertEqual(convertCaretFromAnySistemo(str: "Cxxu Ŭ"), "C^u U^"); // multi
+        XCTAssertEqual(Esperanto.convertCaretFromAnySistemo(str: "Ĉu"), "C^u");  // alfabeto
+        XCTAssertEqual(Esperanto.convertCaretFromAnySistemo(str: "ĉu"), "c^u");  // alfabeto
+        XCTAssertEqual(Esperanto.convertCaretFromAnySistemo(str: "Ŭ"), "U^");    // alfabeto
+        XCTAssertEqual(Esperanto.convertCaretFromAnySistemo(str: "Cxu"), "C^u"); // x-systemo
+        XCTAssertEqual(Esperanto.convertCaretFromAnySistemo(str: "Cxxu"), "C^u"); // x-systemo
+        XCTAssertEqual(Esperanto.convertCaretFromAnySistemo(str: "Cxxu Ŭ"), "C^u U^"); // multi
 
-        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "C^u"), "Ĉu");
-        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "c^u"), "ĉu");
-        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "U^"), "Ŭ");
-        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "U~"), "Ŭ");
-        XCTAssertEqual(convertAlfabetoFromCaretSistemo(str: "U~c^"), "Ŭĉ"); // multi
+        XCTAssertEqual(Esperanto.convertAlfabetoFromCaretSistemo(str: "C^u"), "Ĉu");
+        XCTAssertEqual(Esperanto.convertAlfabetoFromCaretSistemo(str: "c^u"), "ĉu");
+        XCTAssertEqual(Esperanto.convertAlfabetoFromCaretSistemo(str: "U^"), "Ŭ");
+        XCTAssertEqual(Esperanto.convertAlfabetoFromCaretSistemo(str: "U~"), "Ŭ");
+        XCTAssertEqual(Esperanto.convertAlfabetoFromCaretSistemo(str: "U~c^"), "Ŭĉ"); // multi
         
-        XCTAssertEqual(convertAlfabetoFromAnySistemo(str: "U~c^Cxx"), "ŬĉĈ"); // multi
+        XCTAssertEqual(Esperanto.convertAlfabetoFromAnySistemo(str: "U~c^Cxx"), "ŬĉĈ"); // multi
     }
     
     func testDictionary(){
