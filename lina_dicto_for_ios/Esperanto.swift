@@ -100,40 +100,47 @@ class Esperanto{
     }
 
     static let finajxoj :[String] = [
+        "o",
         "i",
         "as",
         "is",
         "os",
         "us",
-        "u"
+        "u",
     ];
     
-    //! 語根を返す
-    static func convertRadico(str: String) -> String{
-        var radico = str
+    // 語幹（語尾除去）
+    static func convertRadikalo(str: String) -> String{
+        var radikalo = str
         
-        radico = radico.replacingOccurrences(of: "j$", with: "", options: .regularExpression)
-        
+        // 対格
+        radikalo = radikalo.replacingOccurrences(of: "n$", with: "", options: .regularExpression)
+        //　複数形
+        radikalo = radikalo.replacingOccurrences(of: "j$", with: "", options: .regularExpression)
+        // 品詞語尾
         for finajxo in finajxoj{
-            radico = radico.replacingOccurrences(of: "\(finajxo)$", with: "", options: .regularExpression)
+            let old = radikalo
+            radikalo = radikalo.replacingOccurrences(of: "\(finajxo)$", with: "", options: .regularExpression)
+            if(old != radikalo){
+                break
+            }
         }
         
-        return radico
+        return radikalo
     }
-    
     //! 動詞語尾変換候補一覧があれば返す
-    static func generateVerboCandidate(str: String) -> [String]{
-        let radico = convertRadico(str: str)
+    static func generateVerboCandidates(str: String) -> [String]{
+        let radikalo = convertRadikalo(str: str)
         
-        if(str == radico){
+        if(str == radikalo){
             return []
         }
         
-        var candidate :[String] = []
+        var candidates :[String] = []
         for finajxo in finajxoj{
-            candidate.append(radico + finajxo)
+            candidates.append(radikalo + finajxo)
         }
         
-        return candidate
+        return candidates
     }
 }

@@ -151,6 +151,13 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].modifyKind, "verbo candidates")
         XCTAssertEqual(responses[0].matchItems.count, 1)
 
+        responses = linad.search(searchKey: "lingvon")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "lingvon")
+        XCTAssertEqual(responses[0].modifyKind, "verbo candidates")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+
         // ** multi word multi str match
         responses = linad.search(searchKey: "Kio estas cxi tio.")
         XCTAssertEqual(responses.count, 3)

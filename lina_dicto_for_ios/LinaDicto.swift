@@ -260,7 +260,7 @@ class LDictionary{
     
     func searchResponseFromKeywordNearMatch(keyword: String) -> SearchResponseItem{
         if(Esperanto.isEsperanto(word: keyword)){
-            for keyword_ in Esperanto.generateVerboCandidate(str: keyword){
+            for keyword_ in Esperanto.generateVerboCandidates(str: keyword){
                 let match = searchEKeywordFullMatch(eoKeyword: keyword_)
                 if(match != nil){
                     let matchItems = [match!] // 型ごまかし
