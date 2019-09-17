@@ -267,7 +267,26 @@ class LDictionary{
                     return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "verbo candidates", matchItems: matchItems)
                 }
             }
-            
+
+            // mal-を除いたマッチ
+            let unmal = keyword
+                .lowercased().replacingOccurrences(of: "^mal", with: "", options: .regularExpression)
+            if(unmal != keyword){
+                let match = searchEKeywordFullMatch(eoKeyword: unmal)
+                if(match != nil){
+                    let matchItems = [match!] // 型ごまかし
+                    return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "mal- candidates", matchItems: matchItems)
+                }
+
+                for keyword_ in Esperanto.generateVerboCandidates(str: unmal){
+                    let match = searchEKeywordFullMatch(eoKeyword: keyword_)
+                    if(match != nil){
+                        let matchItems = [match!] // 型ごまかし
+                        return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "mal- + verbo candidates", matchItems: matchItems)
+                    }
+                }
+            }
+
             return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "", matchItems: [])
         }else{
             return SearchResponseItem(lang: "ja", matchedKeyword: keyword, modifyKind: "", matchItems: [])
