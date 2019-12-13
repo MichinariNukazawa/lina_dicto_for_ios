@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,8 +25,9 @@
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-eL-xdA">
                                                 <rect key="frame" x="0.0" y="44" width="414" height="708"/>
-                                                <color key="backgroundColor" red="0.81390949432012782" green="1" blue="0.82874629283845958" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="22"/>
+                                                <color key="backgroundColor" name="LinaDict BackgroundColor"/>
+                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                             </textView>
@@ -70,7 +70,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="2wu-Kj-0lq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="GHV-ig-Hge"/>
                             <constraint firstItem="2wu-Kj-0lq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="SRa-Q1-WnM"/>
@@ -96,11 +96,11 @@
             <objects>
                 <viewController storyboardIdentifier="viewMenu" id="ePV-u2-p2h" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Z6-Em-YEV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1PI-md-dw4">
-                                <rect key="frame" x="0.0" y="44" width="317" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="317" height="808"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUo-u1-GHn">
                                         <rect key="frame" x="139" y="16" width="39" height="30"/>
@@ -109,56 +109,19 @@
                                             <segue destination="CI2-Ep-3UP" kind="unwind" unwindAction="unwindToFirstViewWithSegue:" id="PT1-cf-azv"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKF-Hz-Dcp">
-                                        <rect key="frame" x="0.0" y="667" width="317" height="151"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="質問やサポートに関する 問題についてのお問い合わせ先。 https://twitter.com/MNukazawa   Created by : project daisy bell 2019" translatesAutoresizingMaskIntoConstraints="NO" id="gKF-Hz-Dcp">
+                                        <rect key="frame" x="0.0" y="657" width="317" height="151"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="151" id="dnO-IC-8iN"/>
                                         </constraints>
-                                        <attributedString key="attributedText">
-                                            <fragment content="質問やサポートに関する">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name=".HiraKakuInterface-W3"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" ">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="問題についてのお問い合わせ先。">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name=".HiraKakuInterface-W3"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" ">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="https://twitter.com">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
-                                                    <url key="NSLink" string="mailto:michinari.nukazawa@gmail.com"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="/MNukazawa   Created by : project daisy bell 2019">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" lookupSuggestion="YES"/>
                                     </textView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="OoD-BS-kSk">
-                                        <rect key="frame" x="38" y="311.5" width="241" height="195"/>
+                                        <rect key="frame" x="38" y="306.5" width="241" height="195"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="195" id="QVc-nK-AjS"/>
                                         </constraints>
@@ -169,11 +132,12 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="79" id="Twh-SG-RqF"/>
                                         </constraints>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="OoD-BS-kSk" firstAttribute="leading" secondItem="1PI-md-dw4" secondAttribute="leading" constant="38" id="4VH-p2-jNh"/>
                                     <constraint firstAttribute="trailing" secondItem="gKF-Hz-Dcp" secondAttribute="trailing" id="6EA-UQ-Tj0"/>
@@ -207,5 +171,8 @@
     </scenes>
     <resources>
         <image name="icon.png" width="1024" height="1024"/>
+        <namedColor name="LinaDict BackgroundColor">
+            <color red="0.81960784313725488" green="1" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

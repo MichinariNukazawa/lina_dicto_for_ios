@@ -12,11 +12,12 @@ import UIKit
 //
 // ------------
 
-class ViewController: UIViewController,  UISearchBarDelegate{
+class ViewController: UIViewController, UISearchBarDelegate{
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
+    var prevUserInterfaceStyle = UIUserInterfaceStyle.unspecified
     
     var dict = LDictionary()
 
@@ -25,6 +26,8 @@ class ViewController: UIViewController,  UISearchBarDelegate{
         // Do any additional setup after loading the view.
         
         searchBar.delegate = self
+        
+        prevUserInterfaceStyle = traitCollection.userInterfaceStyle
 
         dict.initialize()
         
@@ -92,9 +95,20 @@ class ViewController: UIViewController,  UISearchBarDelegate{
             return
         }
 
+        var sSearchBGColor = "background-color:rgba(128,256,128,0.6);"
+        var sSearchFGColor = "color:rgba(0,0,0,0.9);"
+        var sResponseStyle = "style='font-size: 24px';"
+        if self.traitCollection.userInterfaceStyle == .dark {
+            sSearchBGColor = "background-color:rgba(0,0,0,0.6);"
+            sSearchFGColor = "color:#ddd;"
+            sResponseStyle = "style='font-size: 24px;color:#ddd;'"
+        }
+
         var html :String = ""
         do{
-            let sSearchStyle = "style='font-size: 14px; background-color:rgba(128,256,128,0.6); width:100%'"
+            let sSearchStyle = "style='font-size: 16px; "
+                + sSearchFGColor + sSearchBGColor
+                + " width:100%'"
             let showSearchKey = searchKey.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
             //showSearchKey = Esperanto.convertAlfabetoFromAnySistemo(str: showSearchKey)
             let t = "<div " + sSearchStyle + ">"
@@ -102,7 +116,6 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                 + "</div>"
             html += t
         }
-        let sResponseStyle = "style='font-size: 22px'"
         for response in searchResponseItems{
             if(response.matchItems.count != 0){
                 if(response.lang == "eo"){
@@ -115,7 +128,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                             + "</div>"
                         html += t
                     }else{
-                        let sModifyStule = "style='font-size: 14px'"
+                        let sModifyStule = "style='font-size: 16px'"
                         let t = "<div " + sResponseStyle + ">"
                             + "<span " + sModifyStule + ">"
                             + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
@@ -150,7 +163,7 @@ class ViewController: UIViewController,  UISearchBarDelegate{
                     + " : is not match."
                     + "<br>"
                     
-                    + "<span style='font-size: 16px'>"
+                    + "<span style='font-size: 18px'>"
                     + "  (" + "<a href='" + url + "'>"
                     + "open browser google translate `"
                     + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
@@ -275,8 +288,25 @@ class ViewController: UIViewController,  UISearchBarDelegate{
     }
 
     // ------------
+    // Thema変更で呼ばれる（darkmode対応）
+    // ------------
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        let userInterfaceStyle = traitCollection.userInterfaceStyle // Either .unspecified, .light, or .dark
+        if(prevUserInterfaceStyle != userInterfaceStyle){
+            // styleで埋め込んだCSSを全て置換するのは大変手間なので諦めて全て消去する。
+            textView.text = "";
+
+        }
+        prevUserInterfaceStyle = userInterfaceStyle
+    }
+
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        // Trait collection will change. Use this one so you know what the state is changing to.
+    }
+    
+    // ------------
     //
     // ------------
 
 }
-
