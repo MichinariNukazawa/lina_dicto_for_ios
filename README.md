@@ -10,7 +10,9 @@ lina\_dicto\_for\_ios  は日本語/Esperanto変換を検索できる辞書ア�
 ![lina\_dicto\_for\_ios ](document/image/lina_dicto_for_ios_0.0.20190728.png)  
 
 # get App
-[AppStoreにて公開中（フリー）]( https://apps.apple.com/us/app/lina-dicto/id1474809778 )  
+[App Storeにて公開中（フリー）]( https://apps.apple.com/us/app/lina-dicto/id1474809778 )  
+App Store install QR code.  
+<img alt="lina_dicto apple app store url qrcode" src="document/image/lina_dicto_for_ios_appstore_url.svg" width="300">  
 
 # 辞書データについて
 外部の辞書データを改変し収録させて頂きました。感謝いたします。  
