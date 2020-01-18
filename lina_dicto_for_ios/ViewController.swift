@@ -97,16 +97,16 @@ class ViewController: UIViewController, UISearchBarDelegate{
 
         var sSearchBGColor = "background-color:rgba(128,256,128,0.6);"
         var sSearchFGColor = "color:rgba(0,0,0,0.9);"
-        var sResponseStyle = "style='font-size: 24px';"
+        var sResponseStyle = "style='font-size: 24pt';"
         if self.traitCollection.userInterfaceStyle == .dark {
             sSearchBGColor = "background-color:rgba(0,0,0,0.6);"
             sSearchFGColor = "color:#ddd;"
-            sResponseStyle = "style='font-size: 24px;color:#ddd;'"
+            sResponseStyle = "style='font-size: 24pt;color:#ddd;'"
         }
 
         var html :String = ""
         do{
-            let sSearchStyle = "style='font-size: 16px; "
+            let sSearchStyle = "style='font-size: 16pt; "
                 + sSearchFGColor + sSearchBGColor
                 + " width:100%'"
             let showSearchKey = searchKey.replacingOccurrences(of: "//s+", with: " ", options: .regularExpression)
@@ -128,7 +128,7 @@ class ViewController: UIViewController, UISearchBarDelegate{
                             + "</div>"
                         html += t
                     }else{
-                        let sModifyStule = "style='font-size: 16px'"
+                        let sModifyStule = "style='font-size: 16pt'"
                         let t = "<div " + sResponseStyle + ">"
                             + "<span " + sModifyStule + ">"
                             + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
@@ -163,7 +163,7 @@ class ViewController: UIViewController, UISearchBarDelegate{
                     + " : is not match."
                     + "<br>"
                     
-                    + "<span style='font-size: 18px'>"
+                    + "<span style='font-size: 18pt'>"
                     + "  (" + "<a href='" + url + "'>"
                     + "open browser google translate `"
                     + Esperanto.convertAlfabetoFromAnySistemo(str: matchedKeyword)
