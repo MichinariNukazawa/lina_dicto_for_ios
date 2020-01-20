@@ -11,8 +11,12 @@ import XCTest
 
 class lina_dicto_for_iosTests: XCTestCase {
 
+    let linad = LDictionary()
+
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        linad.initialize()
+    
     }
 
     override func tearDown() {
@@ -67,9 +71,14 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(Esperanto.convertAlfabetoFromAnySistemo(str: "U~c^Cxx"), "ŬĉĈ"); // multi
     }
     
-    func testDictionary(){
-        let linad = LDictionary()
-        linad.initialize()
+    func testInitDictionary(){
+        self.measure {
+            let linad_ = LDictionary()
+            linad_.initialize()
+        }
+    }
+
+    func testEoQueryDictionary(){
         var responses :[SearchResponseItem]
         
         // ** 1word単語マッチ uppercase
@@ -159,7 +168,9 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].matchItems.count, 1)
 
         // ** multi word multi str match
+        self.measure {
         responses = linad.search(searchKey: "Kio estas cxi tio.")
+        }
         XCTAssertEqual(responses.count, 3)
         XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Kio")
@@ -175,6 +186,11 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[2].matchedKeyword, "c^i tio")
         XCTAssertEqual(responses[2].matchItems.count, 1)
         XCTAssertEqual(responses[2].matchItems[0].searchKeyword, "c^i tio")
+        
+    }
+
+    func testJaQueryDictionary(){
+        var responses :[SearchResponseItem]
         
         // ** japanese 1word match
         responses = linad.search(searchKey: "恋愛関係")
@@ -199,7 +215,9 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "bonan matenon")
 
         // ** japanese 1word not match
+        self.measure {
         responses = linad.search(searchKey: "恋仲")
+        }
         XCTAssertEqual(responses.count, 1)
         XCTAssertEqual(responses[0].lang, "ja")
         XCTAssertEqual(responses[0].matchedKeyword, "恋仲")
