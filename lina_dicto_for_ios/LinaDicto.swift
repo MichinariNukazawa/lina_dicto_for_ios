@@ -140,16 +140,26 @@ struct SearchResponseItem{
     var matchItems: [DictItem]
 }
 
+func nowTime() -> String { /* 19:33:32.265 */
+    let format = DateFormatter()
+    format.dateFormat = "mm:ss.SSS"
+    return format.string(from: Date())
+}
+
 class LDictionary{
     private var dictItems = [String : DictItem]()
     private var jaDictItems = [String : [String]]()
     
     func initialize(){
+print(nowTime(), "loading")
+
         initializeEoDict()
         initializeJaDict()
     }
     
     func initializeEoDict(){
+print(nowTime(), "start eo")
+
         // ファイルまでのパスを取得（同時にnilチェック）
         if let path: String = Bundle.main.path(forResource: "dictionary00", ofType: "json") {
             do {
@@ -158,9 +168,12 @@ class LDictionary{
                 
                 let decoder: JSONDecoder = JSONDecoder()
                 do {
+ print(nowTime(), "decode")
+
                     let dictItemOfCodable: [DictItemOfCodable] = try decoder.decode([DictItemOfCodable].self, from: jsonData.data(using: .utf8)!)
                     //print(dictItems)
-                    
+print(nowTime(), "conv")
+
                     for i in dictItemOfCodable{
                         let searchKeyword = sanitizeSearchKeywordEo(eoKeyword: i.key)
                         let dictItem : DictItem = DictItem(searchKeyword: searchKeyword, rawKeyword: i.key, explanation: i.value)
@@ -178,9 +191,14 @@ class LDictionary{
         }else {
             print("指定されたファイルが見つかりません")
         }
+        
+print(nowTime(), "end")
+        print("loading EoDictionary end: ", dictItems.count, nowTime())
     }
-    
+
     func initializeJaDict(){
+print(nowTime(), "start ja")
+
         // ファイルまでのパスを取得（同時にnilチェック）
         if let path: String = Bundle.main.path(forResource: "JaDictionary00", ofType: "json") {
             do {
@@ -189,9 +207,13 @@ class LDictionary{
                 
                 let decoder: JSONDecoder = JSONDecoder()
                 do {
+print(nowTime(), "decode")
+
                     let dictItemOfCodable: [JaDictItemOfCodable] = try decoder.decode([JaDictItemOfCodable].self, from: jsonData.data(using: .utf8)!)
                     //print(dictItems)
                     
+print(nowTime(), "conv")
+
                     for i in dictItemOfCodable{
                         jaDictItems[i.key] = i.values
                     }
@@ -208,6 +230,7 @@ class LDictionary{
             print("指定されたファイルが見つかりません")
         }
         
+print(nowTime(), "end")
         print("loading JaDictionary end: ", jaDictItems.count)
     }
     
