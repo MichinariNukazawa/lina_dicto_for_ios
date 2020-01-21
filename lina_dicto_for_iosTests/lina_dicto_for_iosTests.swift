@@ -72,10 +72,10 @@ class lina_dicto_for_iosTests: XCTestCase {
     }
     
     func testInitDictionary(){
-        self.measure {
+        //self.measure {
             let linad_ = LDictionary()
             linad_.initialize()
-        }
+        //}
     }
 
     func testEoQueryDictionary(){
@@ -256,7 +256,9 @@ class lina_dicto_for_iosTests: XCTestCase {
         let dataA = [
             ["Cxu vi amas s^in?", ["Cxu", "vi", "amas", "s^in"]], // ^-sistemo x-sistemo
             ["Kio estas cxi tio.", ["Kio", "estas", "cxi", "tio"]],
-//            ["SukeraSparoのスペースにPanoを持ってくると", ["Sukera", "Sparo", "の", "スペース", "に", "Pano", "を", "持っ", "て", "くる", "と"]], // 日本語混在
+            ["薄緑の", ["薄緑", "の"]], // 日本語分割(この例は全体マッチする語が辞書に登録されているが)
+            ["恋仲な", ["恋仲", "な"]], // 日本語分割
+            ["SukeraSparoのスペースにPanoを持ってくると", ["Sukera", "Sparo", "の", "スペース", "に", "Pano", "を", "持っ", "て", "くる", "と"]], // 日本語混在
         ]
 
         for d in dataA{
