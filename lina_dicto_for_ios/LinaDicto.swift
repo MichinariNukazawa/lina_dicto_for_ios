@@ -107,16 +107,6 @@ struct Tokenizer {
 //
 // ------------
 
-struct DictItemOfCodable : Codable{
-    let key: String
-    let value: String
-    
-    enum CodingKeys: String, CodingKey {
-        case key = "k"
-        case value = "v"
-    }
-}
-
 struct JaDictItemOfCodable : Codable{
     let key: String
     let values: [String]
@@ -127,10 +117,16 @@ struct JaDictItemOfCodable : Codable{
     }
 }
 
-struct DictItem{
-    let searchKeyword: String
+struct DictItem : Codable{
     let rawKeyword: String
     let explanation: String
+    let searchKeyword: String
+
+    enum CodingKeys: String, CodingKey {
+        case rawKeyword = "k"
+        case explanation = "v"
+        case searchKeyword = "s"
+    }
 }
 
 struct SearchResponseItem{
@@ -170,14 +166,11 @@ print(nowTime(), "start eo")
                 do {
  print(nowTime(), "decode")
 
-                    let dictItemOfCodable: [DictItemOfCodable] = try decoder.decode([DictItemOfCodable].self, from: jsonData.data(using: .utf8)!)
-                    //print(dictItems)
+                    let ds : [DictItem] = try decoder.decode([DictItem].self, from: jsonData.data(using: .utf8)!)
 print(nowTime(), "conv")
 
-                    for i in dictItemOfCodable{
-                        let searchKeyword = sanitizeSearchKeywordEo(eoKeyword: i.key)
-                        let dictItem : DictItem = DictItem(searchKeyword: searchKeyword, rawKeyword: i.key, explanation: i.value)
-                        dictItems[searchKeyword] = dictItem
+                    for dictItem in ds{
+                        dictItems[dictItem.searchKeyword] = dictItem
                     }
                 } catch {
                     print("error:", error.localizedDescription)
@@ -186,8 +179,6 @@ print(nowTime(), "conv")
             } catch  {
                 print("ファイルの内容取得時に失敗")
             }
-            
-            
         }else {
             print("指定されたファイルが見つかりません")
         }
