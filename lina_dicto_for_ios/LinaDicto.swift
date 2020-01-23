@@ -361,9 +361,38 @@ print(nowTime(), "end")
             }
         }
         
-        // 先頭から2wordずつマッチ
+        // 先頭から3wordずつマッチ
         var iSearchWord = 0
         while(iSearchWord < searchWords.count){
+            // 3word 一致検索
+            if(3 <= (searchWords.count - iSearchWord)){
+                var is3Word = true;
+
+                let is0 = Esperanto.isEsperanto(word: searchWords[iSearchWord])
+                let is1 = Esperanto.isEsperanto(word: searchWords[iSearchWord + 1])
+                let is2 = Esperanto.isEsperanto(word: searchWords[iSearchWord + 1])
+                var joinedSearchKey = "";
+                if(is0 && is1 && is2){ // eo
+                    joinedSearchKey = searchWords[iSearchWord]
+                        + " " + searchWords[iSearchWord + 1]
+                        + " " + searchWords[iSearchWord + 2]
+                }else if(!is0 && !is1 && !is2){ // ja
+                    joinedSearchKey = searchWords[iSearchWord]
+                        + "" + searchWords[iSearchWord + 1]
+                        + "" + searchWords[iSearchWord + 2]
+                }else{
+                    is3Word = false;
+                }
+                
+                if(is3Word){
+                    let response = searchResponseFromKeywordFullMatch(keyword: joinedSearchKey)
+                    if(response.matchItems.count != 0){
+                        result.append(response)
+                        iSearchWord += 3
+                        continue
+                    }
+                }
+            }
             // 2word 一致検索
             if(2 <= (searchWords.count - iSearchWord)){
                 var is2Word = true;

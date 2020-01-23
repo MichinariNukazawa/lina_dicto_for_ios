@@ -181,6 +181,14 @@ class lina_dicto_for_iosTests: XCTestCase {
         responses = linad.search(searchKey: "estas cxi tio kiel")
         XCTAssertEqual(responses.count, 3)
 
+        // ** 3 word match (in string)(volto en metro)
+        responses = linad.search(searchKey: "estas volto en metro")
+        XCTAssertEqual(responses.count, 2)
+        responses = linad.search(searchKey: "volto en metro estas")
+        XCTAssertEqual(responses.count, 2)
+        responses = linad.search(searchKey: "estas volto en metro estas")
+        XCTAssertEqual(responses.count, 3)
+
         // 接頭辞
         responses = linad.search(searchKey: "mal-")
         XCTAssertEqual(responses.count, 1)
