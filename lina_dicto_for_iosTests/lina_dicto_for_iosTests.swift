@@ -22,18 +22,6 @@ class lina_dicto_for_iosTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
     
     func testEsperanto(){
         //** esperanto文字列判定
@@ -69,13 +57,6 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(Esperanto.convertAlfabetoFromCaretSistemo(str: "U~c^"), "Ŭĉ"); // multi
         
         XCTAssertEqual(Esperanto.convertAlfabetoFromAnySistemo(str: "U~c^Cxx"), "ŬĉĈ"); // multi
-    }
-    
-    func testInitDictionary(){
-        //self.measure {
-            let linad_ = LDictionary()
-            linad_.initialize()
-        //}
     }
 
     func testEoQueryDictionary(){
@@ -168,9 +149,7 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].matchItems.count, 1)
 
         // ** multi word multi str match
-        self.measure {
         responses = linad.search(searchKey: "Kio estas cxi tio.")
-        }
         XCTAssertEqual(responses.count, 3)
         XCTAssertEqual(responses[0].lang, "eo")
         XCTAssertEqual(responses[0].matchedKeyword, "Kio")
@@ -186,6 +165,21 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[2].matchedKeyword, "c^i tio")
         XCTAssertEqual(responses[2].matchItems.count, 1)
         XCTAssertEqual(responses[2].matchItems[0].searchKeyword, "c^i tio")
+
+        // ** 4 word (全文 完全一致)
+        responses = linad.search(searchKey: "tutmonda esperantista junulara organizo")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "tutmonda esperantista junulara organizo")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        
+        // ** 2 word match (in string)("cxi tio")
+        responses = linad.search(searchKey: "estas cxi tio")
+        XCTAssertEqual(responses.count, 2)
+        responses = linad.search(searchKey: "cxi tio kiel")
+        XCTAssertEqual(responses.count, 2)
+        responses = linad.search(searchKey: "estas cxi tio kiel")
+        XCTAssertEqual(responses.count, 3)
 
         // 接頭辞
         responses = linad.search(searchKey: "mal-")
@@ -266,9 +260,7 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "bonan matenon")
 
         // ** japanese 1word not match
-        self.measure {
         responses = linad.search(searchKey: "恋仲")
-        }
         XCTAssertEqual(responses.count, 1)
         XCTAssertEqual(responses[0].lang, "ja")
         XCTAssertEqual(responses[0].matchedKeyword, "恋仲")
@@ -325,6 +317,46 @@ class lina_dicto_for_iosTests: XCTestCase {
             let value :[String] = d[1] as! [String]
             let res = Tokenizer.tokenize(text: key)
             XCTAssertEqual(res, value)
+        }
+    }
+    
+    func testInitDictionary(){
+        //self.measure {
+            let linad_ = LDictionary()
+            linad_.initialize()
+        //}
+    }
+
+    func testEoQueryDictionaryLongStringMatchTime(){
+        self.measure {
+            var responses :[SearchResponseItem]
+            responses = linad.search(searchKey: "Kio estas cxi tio. bonan matenon vocxo amrilato")
+            XCTAssertEqual(responses.count, 6)
+        }
+    }
+    
+    func testEoQueryDictionaryEoLongStringNotMatchTime(){
+        self.measure {
+            var responses :[SearchResponseItem]
+            responses = linad.search(searchKey: "xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx")
+            XCTAssertEqual(responses.count, 5)
+        }
+    }
+    
+    
+    func testJaQueryDictionaryJaWordMatchTime(){
+        self.measure {
+            var responses :[SearchResponseItem]
+            responses = linad.search(searchKey: "恋仲")
+            XCTAssertEqual(responses.count, 1)
+        }
+    }
+
+    func testJaQueryDictionaryJaLongStringMatchTime(){
+        self.measure {
+            var responses :[SearchResponseItem]
+            responses = linad.search(searchKey: "「手を繋いで週末にふたりきりでお出かけするということは、あなたたち二人は恋愛関係なのですか？」　「はい。実はそうなんです」")
+            XCTAssertTrue(responses.count != 0)
         }
     }
 }
