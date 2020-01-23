@@ -186,7 +186,58 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[2].matchedKeyword, "c^i tio")
         XCTAssertEqual(responses[2].matchItems.count, 1)
         XCTAssertEqual(responses[2].matchItems[0].searchKeyword, "c^i tio")
-        
+
+        // 接頭辞
+        responses = linad.search(searchKey: "mal-")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "mal-")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        responses = linad.search(searchKey: "mal")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "mal")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "mal-")
+
+        // 接尾辞"-*"
+        responses = linad.search(searchKey: "-us")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "-us")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        responses = linad.search(searchKey: "us")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "us")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "-us")
+
+        // 接尾辞"-*-"
+        responses = linad.search(searchKey: "-skopi-")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "-skopi-")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "-skopi-")
+        responses = linad.search(searchKey: "skopi")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "skopi")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "-skopi-")
+        responses = linad.search(searchKey: "-int-")
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "-int-")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "-int-")
+        responses = linad.search(searchKey: "int") // is not "-*-" sufikso
+        XCTAssertEqual(responses.count, 1)
+        XCTAssertEqual(responses[0].lang, "eo")
+        XCTAssertEqual(responses[0].matchedKeyword, "int")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "int")
     }
 
     func testJaQueryDictionary(){

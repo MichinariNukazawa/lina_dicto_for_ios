@@ -229,8 +229,8 @@ print(nowTime(), "end")
         return eoKeyword
             .lowercased()
             .removeCharacters(from: "/")
-            .replacingOccurrences(of: "[,//._//?!-]+", with: "", options: .regularExpression)
-        
+            .replacingOccurrences(of: "[,//._//?!]+", with: "", options: .regularExpression)
+        // not remove "-" // prefikso, sufikso
     }
     
     func sanitizeSearchKeywordJa(jaKeyword :String) -> String{
@@ -272,8 +272,35 @@ print(nowTime(), "end")
         }
     }
     
-    func searchResponseFromKeywordNearMatch(keyword: String) -> SearchResponseItem{
+    func searchResponseFromKeywordNearMatch(keyword_: String) -> SearchResponseItem{
+        let keyword = keyword_.removeCharacters(from: "-")
         if(Esperanto.isEsperanto(word: keyword)){
+            do{
+                // prefikso "*-"
+                let match = searchEKeywordFullMatch(eoKeyword: keyword + "-")
+                if(match != nil){
+                    let matchItems = [match!] // 型ごまかし
+                    return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "prefikso (*-)", matchItems: matchItems)
+                }
+            }
+            do{
+                // sufikso "-*-"
+                let match = searchEKeywordFullMatch(eoKeyword: "-" + keyword + "-")
+                if(match != nil){
+                    let matchItems = [match!] // 型ごまかし
+                    return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "sufikso (-*-)", matchItems: matchItems)
+                }
+            }
+            do{
+                // sufikso "-*"
+                let match = searchEKeywordFullMatch(eoKeyword: "-" + keyword)
+                if(match != nil){
+                    let matchItems = [match!] // 型ごまかし
+                    return SearchResponseItem(lang: "eo", matchedKeyword: keyword, modifyKind: "sufikso (-*)", matchItems: matchItems)
+                }
+            }
+
+            //
             for keyword_ in Esperanto.generateVerboCandidates(str: keyword){
                 let match = searchEKeywordFullMatch(eoKeyword: keyword_)
                 if(match != nil){
@@ -362,7 +389,7 @@ print(nowTime(), "end")
             // １1word 候補推定
             do{
                 let keyStr :String = String(searchWords[iSearchWord])
-                let response = searchResponseFromKeywordNearMatch(keyword: keyStr)
+                let response = searchResponseFromKeywordNearMatch(keyword_: keyStr)
                 if(response.matchItems.count != 0){
                     result.append(response)
                     iSearchWord += 1
