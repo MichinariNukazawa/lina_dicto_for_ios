@@ -366,13 +366,26 @@ print(nowTime(), "end")
         while(iSearchWord < searchWords.count){
             // 2word 一致検索
             if(2 <= (searchWords.count - iSearchWord)){
-                let joinedSearchKey :String = searchWords[iSearchWord] + " " + searchWords[iSearchWord + 1]
+                var is2Word = true;
+
+                let is0 = Esperanto.isEsperanto(word: searchWords[iSearchWord])
+                let is1 = Esperanto.isEsperanto(word: searchWords[iSearchWord + 1])
+                var joinedSearchKey = "";
+                if(is0 && is1){ // eo
+                    joinedSearchKey = searchWords[iSearchWord] + " " + searchWords[iSearchWord + 1]
+                }else if(!is0 && !is1){ // ja
+                    joinedSearchKey = searchWords[iSearchWord] + "" + searchWords[iSearchWord + 1]
+                }else{
+                    is2Word = false;
+                }
                 
-                let response = searchResponseFromKeywordFullMatch(keyword: joinedSearchKey)
-                if(response.matchItems.count != 0){
-                    result.append(response)
-                    iSearchWord += 2
-                    continue
+                if(is2Word){
+                    let response = searchResponseFromKeywordFullMatch(keyword: joinedSearchKey)
+                    if(response.matchItems.count != 0){
+                        result.append(response)
+                        iSearchWord += 2
+                        continue
+                    }
                 }
             }
             //　1word 一致検索

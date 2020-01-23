@@ -273,6 +273,14 @@ class lina_dicto_for_iosTests: XCTestCase {
         XCTAssertEqual(responses[0].lang, "ja")
         XCTAssertEqual(responses[0].matchedKeyword, "恋仲")
         XCTAssertEqual(responses[0].matchItems.count, 0)
+        
+        // ** japanese joined 2word match "恋愛", "関係", "の" -> "恋愛関係", "の"
+        responses = linad.search(searchKey: "恋愛関係の")
+        XCTAssertEqual(responses.count, 2)
+        XCTAssertEqual(responses[0].lang, "ja")
+        XCTAssertEqual(responses[0].matchedKeyword, "恋愛関係")
+        XCTAssertEqual(responses[0].matchItems.count, 1)
+        XCTAssertEqual(responses[0].matchItems[0].searchKeyword, "amrilato")
     }
     
     func testTokenize(){
