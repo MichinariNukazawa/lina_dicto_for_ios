@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A71280D224010F0400B7A354 /* DictionaryChanges.md in Resources */ = {isa = PBXBuildFile; fileRef = A71280D124010F0400B7A354 /* DictionaryChanges.md */; };
 		A724394F22EC951A0021A08B /* legumin.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394D22EC951A0021A08B /* legumin.txt */; };
 		A724395022EC951A0021A08B /* gvidilo.txt in Resources */ = {isa = PBXBuildFile; fileRef = A724394E22EC951A0021A08B /* gvidilo.txt */; };
 		A790225F22EDA571001C2062 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A790225E22EDA571001C2062 /* icon.png */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A71280D124010F0400B7A354 /* DictionaryChanges.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = DictionaryChanges.md; sourceTree = "<group>"; };
 		A724394D22EC951A0021A08B /* legumin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = legumin.txt; sourceTree = "<group>"; };
 		A724394E22EC951A0021A08B /* gvidilo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gvidilo.txt; sourceTree = "<group>"; };
 		A790225E22EDA571001C2062 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		A7EA870C22EB386400B4ED26 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A71280D124010F0400B7A354 /* DictionaryChanges.md */,
 				A7DD67EC22F5347C006EB65F /* ja_dictionary_ios.json */,
 				A790225E22EDA571001C2062 /* icon.png */,
 				A724394E22EC951A0021A08B /* gvidilo.txt */,
@@ -267,6 +270,7 @@
 				A7EA86E422EB307A00B4ED26 /* Assets.xcassets in Resources */,
 				A7EA874A22EC8C0C00B4ED26 /* Settings.bundle in Resources */,
 				A790225F22EDA571001C2062 /* icon.png in Resources */,
+				A71280D224010F0400B7A354 /* DictionaryChanges.md in Resources */,
 				A7EA86E222EB307800B4ED26 /* Main.storyboard in Resources */,
 				A7EA870E22EB388A00B4ED26 /* dictionary_ios.json in Resources */,
 				A724395022EC951A0021A08B /* gvidilo.txt in Resources */,

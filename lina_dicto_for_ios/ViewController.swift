@@ -51,15 +51,9 @@ class ViewController: UIViewController, UISearchBarDelegate{
         return "nothing file error."
     }
     
-    func command(str :String) -> Bool{
-        if("!help" == str){
-            let sHelp = "!help / このHelpを表示\n"
-                + "!gvidilo / gvidilo.txtを表示\n"
-                + "!legumin / legumin.txtを表示\n"
-            textView.text = sHelp
-            textView.scrollRangeToVisible(NSMakeRange(1, 1))
-            return true
-        }
+    func command(str_ :String) -> Bool{
+        let str = str_.lowercased()
+
         if("!gvidilo" == str){
             textView.text = "# gvidilo.txt\n"
             textView.text += readText(filename: "gvidilo", ext: "txt")
@@ -72,7 +66,22 @@ class ViewController: UIViewController, UISearchBarDelegate{
             textView.scrollRangeToVisible(NSMakeRange(1, 1))
             return true
         }
-        
+        if("!dictionarychanges" == str){
+            textView.text = "# DictionaryChanges.md\n"
+            textView.text += readText(filename: "DictionaryChanges", ext: "md")
+            textView.scrollRangeToVisible(NSMakeRange(1, 1))
+            return true
+        }
+        if("!help" == str || "!" == str.prefix(1) ){
+            let sHelp = "!help / このHelpを表示\n"
+                + "!gvidilo / gvidilo.txtを表示\n"
+                + "!legumin / legumin.txtを表示\n"
+                + "!DictionaryChanges / 辞書データ変更内容を表示\n"
+            textView.text = sHelp
+            textView.scrollRangeToVisible(NSMakeRange(1, 1))
+            return true
+        }
+
         return false
     }
     
@@ -90,7 +99,7 @@ class ViewController: UIViewController, UISearchBarDelegate{
         }
 
         // コマンド処理
-        if(command(str: searchKey)){
+        if(command(str_: searchKey)){
             searchBar.text = ""
             return
         }
