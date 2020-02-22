@@ -157,7 +157,7 @@ print(nowTime(), "loading")
 print(nowTime(), "start eo")
 
         // ファイルまでのパスを取得（同時にnilチェック）
-        if let path: String = Bundle.main.path(forResource: "dictionary00", ofType: "json") {
+        if let path: String = Bundle.main.path(forResource: "dictionary_ios", ofType: "json") {
             do {
                 // ファイルの内容を取得する
                 let jsonData = try String(contentsOfFile: path)
@@ -191,7 +191,7 @@ print(nowTime(), "end")
 print(nowTime(), "start ja")
 
         // ファイルまでのパスを取得（同時にnilチェック）
-        if let path: String = Bundle.main.path(forResource: "JaDictionary00", ofType: "json") {
+        if let path: String = Bundle.main.path(forResource: "ja_dictionary_ios", ofType: "json") {
             do {
                 // ファイルの内容を取得する
                 let jsonData = try String(contentsOfFile: path)
